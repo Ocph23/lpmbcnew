@@ -18,12 +18,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/adminlpm/identitas', [IdentitasController::class, 'update'])->name('identitas.update');
 
     Route::resource('/adminlpm/auditis', AuditiController::class)->except(['show']);
-    Route::resource('/adminlpm/periodes', PeriodeController::class)->except(['show']);
     Route::resource('/adminlpm/jadwal-audits', JadwalAuditController::class)->except(['show', 'update']);
     Route::post('/adminlpm/jadwal-audits/update', [JadwalAuditController::class, 'update'])->name('jadwal-audits.update');
     Route::resource('/adminlpm/monevs', MonevController::class)->except(['show']);
     Route::post('/adminlpm/monevs/update/{id}', [MonevController::class, 'update'])->name('monevs.update');
     Route::post('/adminlpm/dokumen-mutus/update/{id}', [DokumenMutuController::class, 'update'])->name('dokumen-mutus.update');
+    Route::resource('/adminlpm/periodes', PeriodeController::class)->except(['show', 'index']);
 });
+
+Route::get('/adminlpm/periodes', [PeriodeController::class, 'index'])->name('periodes.index');
 
 Route::resource('/adminlpm/dokumen-mutus', DokumenMutuController::class)->except(['show', 'update']);

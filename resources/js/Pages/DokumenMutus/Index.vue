@@ -4,6 +4,7 @@ import { ref, watch } from 'vue'
 import { router, usePage } from '@inertiajs/vue3'
 import AdminLayout from '../commponents/layouts/AdminLayout.vue'
 import { VTButtonAction, VTIconEye, VTIconPlus, VTStatus } from '@ocph23/vtocph23'
+import ActionComponent from '../commponents/ActionComponent.vue'
 
 const props = defineProps({
     dokumenMutus: Array,
@@ -38,8 +39,8 @@ const destroy = (id) => {
         <div class="p-2">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold">Dokumen {{ parameter.kategori }}</h1>
-                <VTButtonAction :url="route('dokumen-mutus.create', { kategori: parameter.kategori })"
-                    :style="'success'">
+                <VTButtonAction v-if="isAuthenticated"
+                    :url="route('dokumen-mutus.create', { kategori: parameter.kategori })" :style="'success'">
                     <VTIconPlus />
                 </VTButtonAction>
             </div>
@@ -95,9 +96,12 @@ const destroy = (id) => {
                             </td>
                             <td
                                 class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end gap-2">
-                                <VTButtonAction :url="route('dokumen-mutus.edit', doc.id)" :type="'edit'"
-                                    :style="'warning'" />
-                                <VTButtonAction @click="destroy(doc.id)" type="delete" :style="'danger'" />
+                                <ActionComponent :is-authenticated="isAuthenticated">
+                                    <VTButtonAction :url="route('dokumen-mutus.edit', doc.id)" :type="'edit'"
+                                        :style="'warning'" />
+                                    <VTButtonAction @click="destroy(doc.id)" type="delete" :style="'danger'" />
+                                </ActionComponent>
+
                             </td>
                         </tr>
                         <tr v-if="dokumenMutus.length === 0">

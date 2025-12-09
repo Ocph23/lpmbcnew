@@ -29,7 +29,8 @@ class AppServiceProvider extends ServiceProvider
                     'error' => Session::get('error'),
                     'warning' => Session::get('warning'),
                 ];
-            }
+            },
+            'isAuthenticated' => fn() => auth()->check(),
         ]);
     }
 }
