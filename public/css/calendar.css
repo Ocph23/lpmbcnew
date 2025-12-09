@@ -1,0 +1,88 @@
+#calendar {
+    width: 100%;
+    font-family: "Nunito", sans-serif;
+}
+
+/* Grid hari + tanggal */
+.calendar-header,
+.calendar-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+
+/* Judul hari */
+.calendar-header div {
+    background: #eef2ff;
+    padding: 8px 0;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 6px;
+}
+
+/* Kotak tanggal */
+.calendar-body div {
+    min-height: 90px;
+    background: white;
+    border-radius: 6px;
+    padding: 6px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid #ececec;
+    transition: 0.15s;
+}
+
+/* Hover tanggal */
+.calendar-body div:hover {
+    background: #f1f3ff;
+}
+
+/* Tanggal hari ini */
+.today {
+    border: 2px solid #4e73df !important;
+    font-weight: bold;
+}
+
+/* Event style */
+.academic-event {
+    display: block;
+    margin-top: 20px;
+    padding: 4px 6px;
+    border-radius: 20px;
+    font-size: 12px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+/* Event normal */
+.academic-event.normal {
+    background: #36b9cc;
+    color: white;
+}
+
+/* Event penting */
+.academic-event.important {
+    background: #e74a3b;
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .calendar-body div {
+        min-height: 70px;
+        padding: 4px;
+    }
+
+    .calendar-header div {
+        padding: 6px 0;
+        font-size: 12px;
+    }
+
+    .academic-event {
+        font-size: 10px;
+        padding: 3px 4px;
+        border-radius: 12px;
+    }
+}

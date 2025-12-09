@@ -1,0 +1,38 @@
+.akreditasi-container {
+    text-align: center;
+    padding: 80px 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.subtitle {
+    font-size: 36px;
+    color: #2f3e46;
+    font-weight: 600;
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.akreditasi-stats {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 80px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 90px;
+    color: #2c3e50;
+    font-weight: 700;
+    margin: 0;
+    transition: all 0.3s ease;
+}
+
+.stat-label {
+    font-size: 20px;
+    color: #2f3e46;
+    margin-top: 10px;
+}

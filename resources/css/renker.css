@@ -1,0 +1,67 @@
+.renker-container {
+    max-width: 1000px;
+    margin: 60px auto;
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background-color: #f8fafc;
+}
+
+.renker-logo {
+    width: 100px;
+    display: block;
+    margin: 0 auto 20px auto;
+}
+
+.renker-title {
+    color: #006699;
+    border-bottom: 2px solid #006699;
+    padding-bottom: 5px;
+    margin-bottom: 30px;
+}
+
+.renker-desc {
+    text-align: justify;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.renker-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    text-align: left;
+}
+
+.renker-table th,
+.renker-table td {
+    border: 1px solid #ccc;
+    padding: 12px 15px;
+    font-size: 15px;
+}
+
+.renker-table th {
+    background-color: #006699;
+    color: white;
+    text-align: center;
+}
+
+.renker-table tr:nth-child(even) {
+    background-color: #f4f8fb;
+}
+
+@media (max-width: 600px) {
+    .renker-container {
+        padding: 20px;
+    }
+
+    .renker-table,
+    .renker-table th,
+    .renker-table td {
+        font-size: 13px;
+    }
+}

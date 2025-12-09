@@ -1,0 +1,569 @@
+Berikut adalah contoh implementasi aplikasi penjamin mutu universitas menggunakan Laravel sebagai backend dan Vue.js sebagai frontend:
+
+Backend (Laravel)
+
+Instalasi Dependensi
+Buat projek baru dengan laravel new dan instal dependensi yang dibutuhkan:
+
+composer require --prefer-dist barryvdh/laravel-debugbar "^3.5"
+composer require --prefer-dist laravelcollective/html "^6.2"
+Model dan Eloquent
+Buat model untuk Dokumen, Bukti Kegiatan, dan Tim Auditor:
+
+// app/Models/Dokumen.php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Dokumen extends Model
+{
+    protected $fillable = ['judul', 'konten'];
+
+    public function bukti_kegiatan(): HasMany
+    {
+        return $this->hasMany(BuktiKegiatan::class);
+    }
+}
+
+// app/Models/BuktiKegiatan.php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class BuktiKegiatan extends Model
+{
+    protected $fillable = ['judul', 'konten', 'dokumen_id'];
+
+    public function dokumen(): BelongsTo
+    {
+        return $this->belongsTo(Dokumen::class);
+    }
+}
+
+// app/Models/TimAuditor.php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class TimAuditor extends Model
+{
+    protected $fillable = ['nama', 'jabatan'];
+
+    public function audit(): HasMany
+    {
+        return $this->hasMany(Audit::class);
+    }
+}
+Kontroler dan Route
+Buat kontroler untuk Dokumen, Bukti Kegiatan, Tim Auditor, dan Audit:
+
+// app/Http/Controllers/DokumenController.php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Dokumen;
+
+class DokumenController extends Controller
+{
+    public function index()
+    {
+        $dokumens = Dokumen::all();
+        return view('dokumen.index', compact('dokumens'));
+    }
+
+    public function create()
+    {
+        return view('dokumen.create');
+    }
+
+    public function store(Request $request)
+    {
+        $dokumen = new Dokumen($request->all());
+        $dokumen->save();
+        return redirect()->route('dokumen.index');
+    }
+
+    public function show(Dokumen $dokumen)
+    {
+        return view('dokumen.show', compact('dokumen'));
+    }
+
+    public function edit(Dokumen $dokumen)
+    {
+        return view('dokumen.edit', compact('dokumen'));
+    }
+
+    public function update(Request $request, Dokumen $dokumen)
+    {
+        $dokumen->update($request->all());
+        return redirect()->route('dokumen.index');
+    }
+
+    public function destroy(Dokumen $dokumen)
+    {
+        $dokumen->delete();
+        return redirect()->route('dokumen.index');
+    }
+}
+
+// app/Http/Controllers/BuktiKegiatanController.php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\BuktiKegiatan;
+
+class BuktiKegiatanController extends Controller
+{
+    public function index()
+    {
+        $buktikegiatan = BuktiKegiatan::all();
+        return view('bukti_kegiatan.index', compact('buktikegiatan'));
+    }
+
+    public function create()
+    {
+        return view('bukti_kegiatan.create');
+    }
+
+    public function store(Request $request)
+    {
+        $bukti_kegiatan = new BuktiKegiatan($request->all());
+        $bukti_kegiatan->save();
+        return redirect()->route('bukti_kegiatan.index');
+    }
+
+    public function show(BuktiKegiatan $bukti_kegiatan)
+    {
+        return view('bukti_kegiatan.show', compact('bukti_kegiatan'));
+    }
+
+    public function edit(BuktiKegiatan $bukti_kegiatan)
+    {
+        return view('bukti_kegiatan.edit', compact('bukti_kegiatan'));
+    }
+
+    public function update(Request $request, BuktiKegiatan $bukti_kegiatan)
+    {
+        $bukti_kegiatan->update($request->all());
+        return redirect()->route('bukti_kegiatan.index');
+    }
+
+    public function destroy(BuktiKegiatan $bukti_kegiatan)
+    {
+        $bukti_kegiatan->delete();
+        return redirect()->route('bukti_kegiatan.index');
+    }
+}
+
+// app/Http/Controllers/TimAuditorController.php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\TimAuditor;
+
+class TimAuditorController extends Controller
+{
+    public function index()
+    {
+        $tim_auditor = TimAuditor::all();
+        return view('tim_auditor.index', compact('tim_auditor'));
+    }
+
+    public function create()
+    {
+        return view('tim_auditor.create');
+    }
+
+    public function store(Request $request)
+    {
+        $tim_auditor = new TimAuditor($request->all());
+        $tim_auditor->save();
+        return redirect()->route('tim_auditor.index');
+    }
+
+    public function show(TimAuditor $tim_auditor)
+    {
+        return view('tim_auditor.show', compact('tim_auditor'));
+    }
+
+    public function edit(TimAuditor $tim_auditor)
+    {
+        return view('tim_auditor.edit', compact('tim_auditor'));
+    }
+
+    public function update(Request $request, TimAuditor $tim_auditor)
+    {
+        $tim_auditor->update($request->all());
+        return redirect()->route('tim_auditor.index');
+    }
+
+    public function destroy(TimAuditor $tim_auditor)
+    {
+        $tim_auditor->delete();
+        return redirect()->route('tim_auditor.index');
+    }
+}
+
+// app/Http/Controllers/AuditController.php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Audit;
+
+class AuditController extends Controller
+{
+    public function index()
+    {
+        $audit = Audit::all();
+        return view('audit.index', compact('audit'));
+    }
+
+    public function create()
+    {
+        return view('audit.create');
+    }
+
+    public function store(Request $request)
+    {
+        $audit = new Audit($request->all());
+        $audit->save();
+        return redirect()->route('audit.index');
+    }
+
+    public function show(Audit $audit)
+    {
+        return view('audit.show', compact('audit'));
+    }
+
+    public function edit(Audit $audit)
+    {
+        return view('audit.edit', compact('audit'));
+    }
+
+    public function update(Request $request, Audit $audit)
+    {
+        $audit->update($request->all());
+        return redirect()->route('audit.index');
+    }
+
+    public function destroy(Audit $audit)
+    {
+        $audit->delete();
+        return redirect()->route('audit.index');
+    }
+}
+
+// app/Http/routes.php
+
+Route::get('/dokumen', 'DokumenController@index')->name('dokumen.index');
+
+Route::get('/dokumen/create', 'DokumenController@create')->name('dokumen.create');
+
+Route::post('/dokumen/store', 'DokumenController@store')->name('dokumen.store');
+
+Route::get('/bukti_kegiatan', 'BuktiKegiatanController@index')->name('bukti_kegiatan.index');
+
+Route::get('/bukti_kegiatan/create', 'BuktiKegiatanController@create')->name('bukti_kegiatan.create');
+
+Route::post('/bukti_kegiatan/store', 'BuktiKegiatanController@store')->name('bukti_kegiatan.store');
+
+Route::get('/tim_auditor', 'TimAuditorController@index')->name('tim_auditor.index');
+
+Route::get('/tim_auditor/create', 'TimAuditorController@create')->name('tim_auditor.create');
+
+Route::post('/tim_auditor/store', 'TimAuditorController@store')->name('tim_auditor.store');
+
+Route::get('/audit', 'AuditController@index')->name('audit.index');
+
+Route::get('/audit/create', 'AuditController@create')->name('audit.create');
+
+Route::post('/audit/store', 'AuditController@store')->name('audit.store');
+Migrasi
+Buat migrasi untuk Dokumen, Bukti Kegiatan, Tim Auditor, dan Audit:
+
+php artisan make:migration create_dokumens_table
+
+php artisan make:migration create_buktikegitan_table
+
+php artisan make:migration create_tim_auditors_table
+
+php artisan make:migration create_audit_table
+Lakukan migrasi:
+
+php artisan migrate
+Seeder
+Buat seeder untuk Dokumen, Bukti Kegiatan, Tim Auditor, dan Audit:
+
+php artisan make:seeder DokumenSeeder
+
+php artisan make:seeder BuktiKegiatanSeeder
+
+php artisan make:seeder TimAuditorSeeder
+
+php artisan make:seeder AuditSeeder
+Lakukan seeder:
+
+php artisan db:seed --class=DokumenSeeder
+
+php artisan db:seed --class=BuktiKegiatanSeeder
+
+php artisan db:seed --class=TimAuditorSeeder
+
+php artisan db:seed --class=AuditSeeder
+Vue.js
+Buat komponen untuk Dokumen, Bukti Kegiatan, Tim Auditor, dan Audit:
+
+// src/components/Dokumen.vue
+
+<template>
+  <div>
+    <h1>Dokumen</h1>
+    <ul>
+      <li v-for="dokumen in dokumens" :key="dokumen.id">
+        {{ dokumen.judul }}
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      dokumens: []
+    };
+  },
+  mounted() {
+    this.$axios.get('/api/dokumen')
+      .then(response => {
+        this.dokumens = response.data;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+};
+</script>
+// src/components/BuktiKegiatan.vue
+
+<template>
+  <div>
+    <h1>Bukti Kegiatan</h1>
+    <ul>
+      <li v-for="buktikegiatan in buktikegitan" :key="buktikegiatan.id">
+        {{ buktikegiatan.judul }}
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      buktikegitan: []
+    };
+  },
+  mounted() {
+    this.$axios.get('/api/buktikegiatan')
+      .then(response => {
+        this.buktikegitan = response.data;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+};
+</script>
+// src/components/TimAuditor.vue
+
+<template>
+  <div>
+    <h1>Tim Auditor</h1>
+    <ul>
+      <li v-for="timauditor in timauditor" :key="timauditor.id">
+        {{ timauditor.nama }}
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      timauditor: []
+    };
+  },
+  mounted() {
+    this.$axios.get('/api/timauditor')
+      .then(response => {
+        this.timauditor = response.data;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+};
+</script>
+// src/components/Audit.vue
+
+<template>
+  <div>
+    <h1>Audit</h1>
+    <ul>
+      <li v-for="audit in audit" :key="audit.id">
+        {{ audit.nama }}
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      audit: []
+    };
+  },
+  mounted() {
+    this.$axios.get('/api/audit')
+      .then(response => {
+        this.audit = response.data;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+};
+</script>
+Main.js
+Buat main.js untuk mengimport komponen:
+
+// src/main.js
+
+import Vue from 'vue';
+import App from './App.vue';
+
+Vue.component('Dokumen', () => import('./components/Dokumen.vue'));
+Vue.component('BuktiKegiatan', () => import('./components/BuktiKegiatan.vue'));
+Vue.component('TimAuditor', () => import('./components/TimAuditor.vue'));
+Vue.component('Audit', () => import('./components/Audit.vue'));
+
+new Vue({
+  render: h => h(App)
+}).$mount('#app');
+App.vue
+Buat app.vue untuk menampilkan komponen:
+
+// src/App.vue
+
+<template>
+  <div id="app">
+    <Dokumen></Dokumen>
+    <BuktiKegiatan></BuktiKegiatan>
+    <TimAuditor></TimAuditor>
+    <Audit></Audit>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'App'
+};
+</script>
+API
+Buat api untuk mengambil data Dokumen, Bukti Kegiatan, Tim Auditor, dan Audit:
+
+// app/Http/Controllers/DokumenApiController.php
+
+namespace App\Http\Controllers\Api;
+
+use Illuminate\Http\Request;
+use App\Models\Dokumen;
+
+class DokumenApiController extends Controller
+{
+    public function index()
+    {
+        $dokumens = Dokumen::all();
+        return response()->json($dokumens);
+    }
+}
+
+// app/Http/Controllers/BuktiKegiatanApiController.php
+
+namespace App\Http\Controllers\Api;
+
+use Illuminate\Http\Request;
+use App\Models\BuktiKegiatan;
+
+class BuktiKegiatanApiController extends Controller
+{
+    public function index()
+    {
+        $buktikegitan = BuktiKegiatan::all();
+        return response()->json($buktikegitan);
+    }
+}
+
+// app/Http/Controllers/TimAuditorApiController.php
+
+namespace App\Http\Controllers\Api;
+
+use Illuminate\Http\Request;
+use App\Models\TimAuditor;
+
+class TimAuditorApiController extends Controller
+{
+    public function index()
+    {
+        $timauditor = TimAuditor::all();
+        return response()->json($timauditor);
+    }
+}
+
+// app/Http/Controllers/AuditApiController.php
+
+namespace App\Http\Controllers\Api;
+
+use Illuminate\Http\Request;
+use App\Models\Audit;
+
+class AuditApiController extends Controller
+{
+    public function index()
+    {
+        $audit = Audit::all();
+        return response()->json($audit);
+    }
+}
+Route API
+Buat route api untuk mengakses data Dokumen, Bukti Kegiatan, Tim Auditor, dan Audit:
+
+// app/Http/routes.php
+
+Route::get('/api/dokumen', 'DokumenApiController@index')->name('dokumen.api');
+
+Route::get('/api/buktikegiatan', 'BuktiKegiatanApiController@index')->name('bukti_kegiatan.api');
+
+Route::get('/api/timauditor', 'TimAuditorApiController@index')->name('tim_auditor.api');
+
+Route::get('/api/audit', 'AuditApiController@index')->name('audit.api');
+Pengujian
+Buat pengujian untuk memastikan bahwa aplikasi berjalan dengan baik:
+
+php artisan test
+Pengujian akan memeriksa apakah semua komponen, kontroler api, dan route api berfungsi dengan benar.
+
+Dengan demikian, aplikasi penjamin mutu universitas menggunakan Laravel sebagai backend dan Vue.js sebagai frontend sudah siap digunakan.

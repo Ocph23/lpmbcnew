@@ -1,0 +1,100 @@
+.pd-container {
+    max-width: 1000px;
+    margin: 60px auto;
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8fafc;
+    color: #333;
+}
+
+.pd-logo {
+    width: 100px;
+    display: block;
+    margin: 0 auto 20px auto;
+}
+
+.pd-title {
+    color: #006699;
+    border-bottom: 2px solid #006699;
+    padding-bottom: 5px;
+    margin-bottom: 30px;
+}
+
+.pd-desc {
+    text-align: justify;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.pd-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    text-align: left;
+}
+
+.pd-table th, 
+.pd-table td {
+    border: 1px solid #ccc;
+    padding: 12px 15px;
+    font-size: 15px;
+}
+
+.pd-table th {
+    background-color: #006699;
+    color: white;
+    text-align: center;
+}
+
+.pd-table tr:nth-child(even) {
+    background-color: #f4f8fb;
+}
+
+.pd-table a {
+    color: #006699;
+    text-decoration: none;
+}
+
+.pd-table a:hover {
+    text-decoration: underline;
+}
+
+/* Pagination */
+.pd-pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pd-pagination button {
+    background-color: #006699;
+    color: white;
+    border: none;
+    margin: 0 3px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pd-pagination button.active {
+    background-color: #004466;
+}
+
+.pd-pagination button:hover {
+    background-color: #005580;
+}
+
+@media (max-width: 600px) {
+    .pd-container {
+        padding: 20px;
+    }
+
+    .pd-table, 
+    .pd-table th, 
+    .pd-table td {
+        font-size: 13px;
+    }
+}
