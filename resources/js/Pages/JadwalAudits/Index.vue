@@ -1,14 +1,22 @@
 <!-- resources/js/Pages/JadwalAudits/Index.vue -->
 <script setup>
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { router, usePage } from '@inertiajs/vue3'
 import AdminLayout from '../commponents/layouts/AdminLayout.vue'
 import { VTButtonAction, VTIconPlus } from '@ocph23/vtocph23'
+import ActionComponent from '../commponents/ActionComponent.vue'
 
 const props = defineProps({
     jadwalAudits: Array,
     periodes: Array,
+    auth: Object
 })
+
+
+const isAdmin = computed(() => {
+    if (!props.auth || !props.auth.user) return false;
+    return props.auth.user.roles.includes('admin');
+});
 
 const periodeFilter = ref(usePage().props.filters?.periode_id || '')
 
@@ -41,7 +49,7 @@ const formatStatus = (status) => {
         <div class="p-2">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold">Jadwal Audit</h1>
-                <VTButtonAction :url="route('jadwal-audits.create')" :style="'success'">
+                <VTButtonAction v-if="isAdmin" :url="route('jadwal-audits.create')" :style="'success'">
                     <VTIconPlus />
                 </VTButtonAction>
             </div>
@@ -70,9 +78,9 @@ const formatStatus = (status) => {
                                 Auditor</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Status</th>
-                            <th
+                            <!-- <th
                                 class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Hasil Audit</th>
+                                Hasil Audit</th> -->
                             <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Aksi</th>
                         </tr>
@@ -98,7 +106,7 @@ const formatStatus = (status) => {
                                 <!-- Tampilkan ikon dokumen jika ada -->
 
                             </td>
-                            <td class="text-center">
+                            <!-- <td class="text-center">
                                 <a v-if="jadwal.document_path" :href="'/storage/' + jadwal.document_path"
                                     target="_blank" class="ml-2 text-blue-600 hover:text-blue-800"
                                     title="Lihat dokumen">
@@ -108,12 +116,14 @@ const formatStatus = (status) => {
                                 <div v-else>
                                     <span>-</span>
                                 </div>
-                            </td>
+                            </td> -->
                             <td
                                 class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end gap-2">
-                                <VTButtonAction :url="route('jadwal-audits.edit', jadwal.id)" type="edit"
-                                    :style="'warning'" />
-                                <VTButtonAction @click="destroy(jadwal.id)" type="delete" :style="'danger'" />
+                                <ActionComponent :is-authenticated="isAdmin">
+                                    <VTButtonAction :url="route('jadwal-audits.edit', jadwal.id)" type="edit"
+                                        :style="'warning'" />
+                                    <VTButtonAction @click="destroy(jadwal.id)" type="delete" :style="'danger'" />
+                                </ActionComponent>
                             </td>
                         </tr>
                         <tr v-if="jadwalAudits.length === 0">

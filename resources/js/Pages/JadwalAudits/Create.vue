@@ -1,8 +1,9 @@
 <!-- resources/js/Pages/JadwalAudits/Create.vue -->
 <script setup>
-import { useForm } from '@inertiajs/vue3'
+import { Link, useForm } from '@inertiajs/vue3'
 import AdminLayout from '../commponents/layouts/AdminLayout.vue'
 import { VTButtonAction, VTIconBack } from '@ocph23/vtocph23'
+import { watch } from 'vue'
 
 const route = window.route
 
@@ -43,7 +44,7 @@ watch(
     <AdminLayout>
         <div class="p-6 max-w-2xl mx-auto">
             <div class="flex items-center mb-6">
-                <h1 class="text-2xl font-bold ml-3">Tambah Jadwal Audit</h1>
+                <h1 class="text-2xl font-bold">Tambah Jadwal Audit</h1>
             </div>
 
             <form @submit.prevent="submit" class="space-y-6">
@@ -81,7 +82,7 @@ watch(
                     <select v-model="form.auditor_id"
                         class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
                         <option :value="null">– Tidak ada –</option>
-                        <option v-for="u in auditors" :key="u.id" :value="u.id">
+                        <option v-for="u in auditors.filter(x => x.kategori == 1)" :key="u.id" :value="u.id">
                             {{ u.name }}
                         </option>
                     </select>
@@ -95,7 +96,7 @@ watch(
                     <select v-model="form.auditor2_id"
                         class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
                         <option :value="null">– Tidak ada –</option>
-                        <option v-for="u in auditors" :key="u.id" :value="u.id">
+                        <option v-for="u in auditors.filter(x => x.kategori == 2)" :key="u.id" :value="u.id">
                             {{ u.name }}
                         </option>
                     </select>
@@ -136,9 +137,11 @@ watch(
                         :disabled="form.processing">
                         Simpan
                     </button>
-                    <VTButtonAction :url="route('jadwal-audits.index')" :style="'secondary'">
+                    <Link :href="route('jadwal-audits.index')"
+                        class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         Batal
-                    </VTButtonAction>
+                    </Link>
+
                 </div>
             </form>
         </div>

@@ -17,19 +17,21 @@ Route::get('/adminlpm', function () {
     return Inertia::render('Home', []);
 })->name('adminlpm');
 
+Route::get('/adminlpm/akreditasi', [AkreditasiController::class, 'index'])->name('akreditasi.index');
+Route::get('/adminlpm/akreditasi/sertifikat', [AkreditasiController::class, 'sertifikat'])->name('akreditasi.sertifikat');
+Route::get('/adminlpm/periodes', [PeriodeController::class, 'index'])->name('periodes.index');
+Route::get('/adminlpm/dokumen-mutus/{param}', [DokumenMutuController::class, 'filter'])->name('dokumen-mutus.filter');
+Route::get('/adminlpm/auditis', [AuditiController::class, 'index'])->name('auditis.index');
+Route::get('/adminlpm/jadwal-audits', [JadwalAuditController::class, 'index'])->name('jadwal-audits.index');
+Route::get('/adminlpm/auditors', [AuditorController::class, 'index'])->name('auditors.index');
+Route::get('/adminlpm/monevs', [MonevController::class, 'index'])->name('monevs.index');
 
-
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('/adminlpm/users', UserController::class);
-
-    Route::get('/adminlpm/akreditasi', [AkreditasiController::class, 'index'])->name('akreditasi.index');
-    Route::get('/adminlpm/akreditasi/sertifikat', [AkreditasiController::class, 'sertifikat'])->name('akreditasi.sertifikat');
     Route::post('/adminlpm/akreditasi', [AkreditasiController::class, 'update'])->name('akreditasi.update');
     Route::post('/adminlpm/akreditasi/sertifikat', [AkreditasiController::class, 'updatesertifikat'])->name('akreditasi.updatesertifikat');
-
     Route::resource('/adminlpm/dokumen-akreditasi', DokumenAkreditasiController::class);
 
-    //Identitas
     Route::get('/adminlpm/identitas/edit', [IdentitasController::class, 'edit'])->name('identitas.edit');
     Route::get('/adminlpm/identitas/visimisi', [IdentitasController::class, 'visimisi'])->name('identitas.visimisi');
     Route::post('/adminlpm/identitas/visimisi', [IdentitasController::class, 'updatevisimisi'])->name('identitas.updatevisimisi');
@@ -38,17 +40,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/adminlpm/identitas/organisasi', [IdentitasController::class, 'organisasi'])->name('identitas.organisasi');
     Route::post('/adminlpm/identitas/organisasi', [IdentitasController::class, 'updateorganisasi'])->name('identitas.updateorganisasi');
 
-    Route::resource('/adminlpm/auditis', AuditiController::class)->except(['show']);
-    Route::resource('/adminlpm/jadwal-audits', JadwalAuditController::class)->except(['show', 'update']);
+    Route::resource('/adminlpm/auditis', AuditiController::class)->except(['show', 'index']);
+    Route::resource('/adminlpm/jadwal-audits', JadwalAuditController::class)->except(['show', 'update', 'index']);
     Route::post('/adminlpm/jadwal-audits/update', [JadwalAuditController::class, 'update'])->name('jadwal-audits.update');
-    Route::resource('/adminlpm/monevs', MonevController::class)->except(['show']);
+    Route::resource('/adminlpm/monevs', MonevController::class)->except(['show', 'index']);
     Route::post('/adminlpm/monevs/update/{id}', [MonevController::class, 'update'])->name('monevs.update');
     Route::post('/adminlpm/dokumen-mutus/update/{id}', [DokumenMutuController::class, 'update'])->name('dokumen-mutus.update');
     Route::resource('/adminlpm/periodes', PeriodeController::class)->except(['show', 'index']);
+    Route::resource('/adminlpm/auditors',  AuditorController::class)->except(['show', 'index']);
+    Route::resource('/adminlpm/dokumen-mutus', DokumenMutuController::class)->except(['show', 'update']);
 });
-
-Route::resource('/adminlpm/auditors',  AuditorController::class);
-Route::get('/adminlpm/periodes', [PeriodeController::class, 'index'])->name('periodes.index');
-
-Route::resource('/adminlpm/dokumen-mutus', DokumenMutuController::class)->except(['show', 'update']);
-Route::get('/adminlpm/dokumen-mutus/{param}', [DokumenMutuController::class, 'filter'])->name('dokumen-mutus.filter');

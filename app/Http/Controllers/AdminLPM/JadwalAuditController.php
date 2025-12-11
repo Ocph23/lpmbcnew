@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AdminLPM;
 
 use App\Http\Controllers\Controller;
 use App\Models\Auditi;
+use App\Models\Auditor;
 use App\Models\JadwalAudit;
 use App\Models\Periode;
 use App\Models\User;
@@ -40,9 +41,7 @@ class JadwalAuditController extends Controller
         $periodes = Periode::all(['id', 'year', 'semester']);
         // $auditors = User::get(['id', 'name']);
 
-        $auditors = User::whereHas('roles', function ($query) {
-            $query->where('role_name', 'auditor');
-        })->get();
+        $auditors = Auditor::all(['id', 'name', 'kategori']);
 
 
         // Jika tidak pakai Spatie, ganti dengan:

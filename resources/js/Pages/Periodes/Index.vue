@@ -30,8 +30,6 @@ const destroy = (id) => {
         router.delete(route('periodes.destroy', id))
     }
 }
-
-
 </script>
 
 <template>

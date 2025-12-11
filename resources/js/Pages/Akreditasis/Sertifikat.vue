@@ -47,7 +47,15 @@ const route = window.route //
 const props = defineProps({
     identitas: String,
     errors: Object,
+    auth: Object
 })
+
+
+
+const isAdmin = computed(() => {
+    if (!props.auth || !props.auth.user) return false;
+    return props.auth.user.roles.includes('admin');
+});
 
 const form = useForm({
     struktur_organisasi: null,

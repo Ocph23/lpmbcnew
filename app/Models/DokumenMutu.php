@@ -17,7 +17,7 @@ class DokumenMutu extends Model
         'kode',
         'nama',
         'sasaran',
-        'unit_id',
+        'auditi_id',
         'kategori',
         'jenis_document',
         'document_path',
@@ -32,9 +32,9 @@ class DokumenMutu extends Model
     }
 
     // Relasi (asumsikan tabel units)
-    public function unit()
+    public function auditi()
     {
-        return $this->belongsTo(\App\Models\Unit::class);
+        return $this->belongsTo(\App\Models\Auditi::class);
     }
 
     // Opsi dropdown (bisa dipindah ke konstanta)

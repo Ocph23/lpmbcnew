@@ -14,7 +14,7 @@
             </template>
         </LinkItem>
 
-        <LinkItem :url="'periodes.index'" title="Periode">
+        <LinkItem v-if="isAdmin" :url="'periodes.index'" title="Periode">
             <template #icon>
                 <svg class="flex-shrink-0 w-4 h-4 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
@@ -25,7 +25,7 @@
         </LinkItem>
 
 
-        <LinkItem title="Identias" is-parent="true" id="identitas" @click="onClickMenu">
+        <LinkItem v-if="isAdmin" title="Identias" is-parent="true" id="identitas" v-on:click-menu="onClickMenu">
             <template #icon>
                 <svg class="flex-shrink-0 w-4 h-4  text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -53,7 +53,7 @@
                 </div>
             </template>
         </LinkItem>
-        <LinkItem id="akreditasi" title="Akreditasi" is-parent="true" v-on:click="onClickMenu">
+        <LinkItem id="akreditasi" title="Akreditasi" is-parent="true" v-on:click-menu="onClickMenu">
             <template #icon>
                 <svg class="flex-shrink-0 w-4 h-4 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -66,7 +66,7 @@
             </template>
             <template #default>
                 <div class="ml-6">
-                    <LinkItem :url="'akreditasi.index'" title="Skor Akreditasi" parent="akreditasi">
+                    <LinkItem v-if="isAdmin" :url="'akreditasi.index'" title="Skor Akreditasi" parent="akreditasi">
                         <template #icon>
                             <ItemIcon />
                         </template>
@@ -80,7 +80,7 @@
             </template>
         </LinkItem>
 
-        <LinkItem title="Pengelolaan Mutu" is-parent="true" id="pengelolaan-mutu" @click="onClickMenu">
+        <LinkItem title="Pengelolaan Mutu" is-parent="true" id="pengelolaan-mutu" v-on:click-menu="onClickMenu">
             <template #icon>
                 <svg class="flex-shrink-0 w-4 h-4 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -114,7 +114,7 @@
             </template>
         </LinkItem>
 
-        <LinkItem title="Audit" is-parent="true" id="audit" @click="onClickMenu">
+        <LinkItem title="Audit" is-parent="true" id="audit" v-on:click-menu="onClickMenu">
             <template #icon>
                 <svg class="flex-shrink-0 w-4 h-4 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -159,7 +159,7 @@
             </template>
         </LinkItem>
 
-        <LinkItem v-if="auth.isAuthenticated && auth.user?.roles.includes('admin')" url="users.index" title="Users">
+        <LinkItem v-if="isAdmin" url="users.index" title="Users">
             <template #icon>
                 <svg class="flex-shrink-0 w-4 h-4 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -210,37 +210,48 @@ import { FwbSidebar, FwbSidebarItem, FwbSidebarDropdownItem, FwbSidebarLogo } fr
 import LinkItem from '../LinkItem.vue';
 import ItemIcon from '../ItemIcon.vue';
 import helper from '../../../helper';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import LinkItemPost from '../LinkItemPost.vue';
 
 const route = window.route;
 
 const auth = usePage().props.auth;
 
-console.log(auth);
-
 const goto = (url) => {
     route(url);
 }
 
+
+const isAdmin = computed(() => {
+    if (!auth || !auth.user) return false;
+    return auth.user.roles.includes('admin');
+});
+
 onMounted(() => {
     const activeMenu = window.localStorage.getItem('activeMenu');
+    tempMenu.value = activeMenu;
     if (activeMenu) {
-        onClickMenu(activeMenu);
+        const element = document.getElementById(activeMenu);
+        window.localStorage.setItem('activeMenu', activeMenu);
+        if (element) {
+            if (element.classList.contains('hidden')) {
+                element.classList.remove('hidden');
+            }
+        }
     }
 });
 
 
+const tempMenu = ref('');
 
 const onClickMenu = (id) => {
-
     const element = document.getElementById(id);
-    //set to storage
     window.localStorage.setItem('activeMenu', id);
-    if (element) {
-        if (element.classList.contains('hidden')) {
-            element.classList.remove('hidden');
-        }
+    tempMenu.value = id;
+    if (element.classList.contains('hidden')) {
+        element.classList.remove('hidden');
+    } else {
+        element.classList.add('hidden');
     }
 };
 

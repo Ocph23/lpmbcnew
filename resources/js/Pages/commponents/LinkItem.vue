@@ -23,7 +23,7 @@ import { computed, onMounted } from 'vue';
 import { route } from 'ziggy-js';
 
 const props = defineProps(['url', 'link', 'title', 'param', 'active', 'isParent', 'id', 'parent']);
-const emit = defineEmits(['click']);
+const emit = defineEmits(['clickMenu']);
 
 
 let xUrl = '';
@@ -48,11 +48,10 @@ const isActive = computed(() => {
 });
 
 
-
 onMounted(() => {
     setTimeout(() => {
         if (isActive.value && !props.isParent) {
-            emit('click', props.parent);
+            emit('clickMenu', props.parent);
         }
     }, 2000);
 
@@ -60,7 +59,7 @@ onMounted(() => {
 
 const openMenu = () => {
     if (props.isParent) {
-        emit('click', props.id);
+        emit('clickMenu', props.id);
     } else {
         window.location.href = xUrl;
     }

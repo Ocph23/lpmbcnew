@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('kode')->unique();
             $table->string('nama');
             $table->string('sasaran')->default('Internal');
-            $table->foreignId('unit_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('auditi_id')->nullable()->constrained()->nullOnDelete();
             $table->string('kategori')->default('Kebijakan SPMI');
             $table->string('jenis_document')->default('Upload');
             $table->string('document_path')->nullable();

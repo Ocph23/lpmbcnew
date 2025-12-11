@@ -6,9 +6,9 @@ import { VTButtonAction } from '@ocph23/vtocph23'
 import helper from '../../helper';
 
 const props = defineProps({
-    units: Array,
+    auditis: Array,
     kategori: String,
-    hasUnit: Boolean,
+    hasauditi: Boolean,
 })
 
 const route = window.route
@@ -17,7 +17,7 @@ const form = useForm({
     kode: '',
     nama: '',
     sasaran: 'Internal',
-    unit_id: null,
+    auditi_id: null,
     kategori: props.kategori,
     jenis_document: 'Upload',
     document_path: '',
@@ -88,17 +88,18 @@ const jenisDocumentOptions = ['Upload', 'Link Eksternal']
                     <div v-if="form.errors.sasaran" class="text-red-500 text-sm mt-1">{{ form.errors.sasaran }}</div>
                 </div>
 
-                <!-- Unit -->
-                <div v-if="hasUnit">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Unit</label>
-                    <select v-model="form.unit_id"
+                <!-- auditi -->
+                <div v-if="hasauditi">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">auditi</label>
+                    <select v-model="form.auditi_id"
                         class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        <option :value="null">– Pilih Unit –</option>
-                        <option v-for="unit in units" :key="unit.id" :value="unit.id">
-                            {{ unit.unit_name }}
+                        <option :value="null">– Pilih auditi –</option>
+                        <option v-for="auditi in auditis" :key="auditi.id" :value="auditi.id">
+                            {{ auditi.name }}
                         </option>
                     </select>
-                    <div v-if="form.errors.unit_id" class="text-red-500 text-sm mt-1">{{ form.errors.unit_id }}</div>
+                    <div v-if="form.errors.auditi_id" class="text-red-500 text-sm mt-1">{{ form.errors.auditi_id }}
+                    </div>
                 </div>
 
 
@@ -134,7 +135,7 @@ const jenisDocumentOptions = ['Upload', 'Link Eksternal']
                         class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Masukkan Link External" />
                     <div v-if="form.errors.document_path" class="text-red-500 text-sm mt-1">{{ form.errors.document_path
-                        }}</div>
+                    }}</div>
                 </div>
 
                 <!-- Aksi -->

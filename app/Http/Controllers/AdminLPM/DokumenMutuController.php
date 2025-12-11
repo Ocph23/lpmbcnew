@@ -5,7 +5,7 @@ namespace App\Http\Controllers\AdminLPM;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DokumenMutuResource;
 use App\Models\DokumenMutu;
-use App\Models\Unit;
+use App\Models\auditi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -20,7 +20,7 @@ class DokumenMutuController extends Controller
 
         $search = $request->input('search');
 
-        $query = DokumenMutu::with('unit')->where(function ($query) use ($param) {
+        $query = DokumenMutu::with('auditi')->where(function ($query) use ($param) {
             if ($param) {
                 $query->where('kategori', $param);
             }
@@ -32,64 +32,64 @@ class DokumenMutuController extends Controller
         }
 
         $dokumenMutus = $query->get();
-        $units = Unit::all(['id', 'unit_name']); // sesuaikan kolom unit
+        $auditis = Auditi::all(['id', 'name']); // sesuaikan kolom auditi
 
 
 
         return Inertia::render('DokumenMutus/Index', [
             'parameter' => $param,
             'dokumenMutus' => DokumenMutuResource::collection($dokumenMutus)->resolve(),
-            'units' => $units,
+            'auditis' => $auditis,
             'filters' => $request->only(['search']),
         ]);
     }
-    public function index(Request $request)
-    {
-        $dataParameter = [];
+    // public function index(Request $request)
+    // {
+    //     $dataParameter = [];
 
-        if ($request->filled('filter')) {
-            try {
-                $dataParameter = json_decode($request->filter, true, 512, JSON_THROW_ON_ERROR);
-            } catch (\JsonException $e) {
-                // Jika JSON tidak valid, abaikan atau return error
-                $dataParameter = [];
-            }
-        }
+    //     if ($request->filled('filter')) {
+    //         try {
+    //             $dataParameter = json_decode($request->filter, true, 512, JSON_THROW_ON_ERROR);
+    //         } catch (\JsonException $e) {
+    //             // Jika JSON tidak valid, abaikan atau return error
+    //             $dataParameter = [];
+    //         }
+    //     }
 
-        $query = DokumenMutu::query();
+    //     $query = DokumenMutu::query();
 
-        $search = $request->input('search');
+    //     $search = $request->input('search');
 
-        $query = DokumenMutu::with('unit')->where(function ($query) use ($dataParameter) {
-            if (isset($dataParameter['kategori']) && $dataParameter['kategori']) {
-                $query->where('kategori', $dataParameter['kategori']);
-            }
-        });
+    //     $query = DokumenMutu::with('auditi')->where(function ($query) use ($dataParameter) {
+    //         if (isset($dataParameter['kategori']) && $dataParameter['kategori']) {
+    //             $query->where('kategori', $dataParameter['kategori']);
+    //         }
+    //     });
 
-        if ($search) {
-            $query->where('kode', 'like', "%{$search}%")
-                ->orWhere('nama', 'like', "%{$search}%");
-        }
+    //     if ($search) {
+    //         $query->where('kode', 'like', "%{$search}%")
+    //             ->orWhere('nama', 'like', "%{$search}%");
+    //     }
 
-        $dokumenMutus = $query->get();
-        $units = Unit::all(['id', 'unit_name']); // sesuaikan kolom unit
+    //     $dokumenMutus = $query->get();
+    //     $auditis = Auditi::all(['id', 'name']); // sesuaikan kolom auditi
 
 
 
-        return Inertia::render('DokumenMutus/Index', [
-            'parameter' => $dataParameter,
-            'dokumenMutus' => DokumenMutuResource::collection($dokumenMutus)->resolve(),
-            'units' => $units,
-            'filters' => $request->only(['search']),
-        ]);
-    }
+    //     return Inertia::render('DokumenMutus/Index', [
+    //         'parameter' => $dataParameter,
+    //         'dokumenMutus' => DokumenMutuResource::collection($dokumenMutus)->resolve(),
+    //         'auditis' => $auditis,
+    //         'filters' => $request->only(['search']),
+    //     ]);
+    // }
 
     public function create(Request $request)
     {
         $kategori = $request->query('kategori');
-        $units = Unit::all(['id', 'unit_name']);
-        $hasUnit = in_array($kategori, ['Formulir SPMI', 'Prosedur Kerja', 'Standar UPPS|Unit']);
-        return Inertia::render('DokumenMutus/Create', compact('units', 'kategori', 'hasUnit'));
+        $auditis = Auditi::all(['id', 'name']);
+        $hasauditi = in_array($kategori, ['Formulir SPMI', 'Prosedur Kerja', 'Standar UPPS|auditi']);
+        return Inertia::render('DokumenMutus/Create', compact('auditis', 'kategori', 'hasauditi'));
     }
 
     public function store(Request $request)
@@ -98,7 +98,7 @@ class DokumenMutuController extends Controller
             'kode' => 'required|string|unique:dokumen_mutus,kode',
             'nama' => 'required|string|max:255',
             'sasaran' => 'required|in:Internal,Eksternal',
-            'unit_id' => 'nullable|exists:units,id',
+            'auditi_id' => 'nullable|exists:auditis,id',
             'kategori' => 'required|string',
             'jenis_document' => 'required|in:Upload,Link Eksternal',
             'document' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
@@ -110,7 +110,7 @@ class DokumenMutuController extends Controller
         }
 
         DokumenMutu::create(array_merge(
-            $request->only(['kode', 'nama', 'sasaran', 'unit_id', 'kategori', 'jenis_document']),
+            $request->only(['kode', 'nama', 'sasaran', 'auditi_id', 'kategori', 'jenis_document']),
             ['document_path' => $documentPath]
         ));
 
@@ -120,8 +120,8 @@ class DokumenMutuController extends Controller
     public function edit(DokumenMutu $dokumenMutu)
     {
 
-        $units = Unit::all(['id', 'unit_name']);
-        return Inertia::render('DokumenMutus/Edit', compact('dokumenMutu', 'units'));
+        $auditis = Auditi::all(['id', 'name']);
+        return Inertia::render('DokumenMutus/Edit', compact('dokumenMutu', 'auditis'));
     }
 
     public function update(Request $request, $id)
@@ -131,7 +131,7 @@ class DokumenMutuController extends Controller
             'kode' => 'required|string|unique:dokumen_mutus,kode,' . $id,
             'nama' => 'required|string|max:255',
             'sasaran' => 'required|in:Internal,Eksternal',
-            'unit_id' => 'nullable|exists:units,id',
+            'auditi_id' => 'nullable|exists:auditis,id',
             'kategori' => 'required|string',
             'jenis_document' => 'required|in:Upload,Link Eksternal',
             'document' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
@@ -151,7 +151,7 @@ class DokumenMutuController extends Controller
         }
 
         $dokumenMutu->update(array_merge(
-            $request->only(['kode', 'nama', 'sasaran', 'unit_id', 'kategori', 'jenis_document']),
+            $request->only(['kode', 'nama', 'sasaran', 'auditi_id', 'kategori', 'jenis_document']),
             ['document_path' => $documentPath]
         ));
 

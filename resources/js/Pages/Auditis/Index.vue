@@ -6,7 +6,7 @@
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold">Daftar Auditi</h1>
 
-                <VTButtonAction :url="route('auditis.create')" :style="'success'">
+                <VTButtonAction v-if="isAdmin" :url="route('auditis.create')" :style="'success'">
                     <VTIconPlus></VTIconPlus>
                 </VTButtonAction>
             </div>
@@ -51,11 +51,13 @@
                                 {{ auditi.head?.email || '–' }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end">
-                                <VTButtonAction :url="route('auditis.edit', auditi.id)" :type="'edit'"
-                                    :style="'warning'">
-                                </VTButtonAction>
-                                <VTButtonAction @click="destroy(auditi.id)" :type="'delete'" :style="'danger'">
-                                </VTButtonAction>
+                                <ActionComponent :is-authenticated="isAdmin">
+                                    <VTButtonAction :url="route('auditis.edit', auditi.id)" :type="'edit'"
+                                        :style="'warning'">
+                                    </VTButtonAction>
+                                    <VTButtonAction @click="destroy(auditi.id)" :type="'delete'" :style="'danger'">
+                                    </VTButtonAction>
+                                </ActionComponent>
                             </td>
                         </tr>
                         <tr v-if="auditis.length === 0">
@@ -73,13 +75,22 @@
 
 <script setup>
 import { Link, router, usePage } from '@inertiajs/vue3'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import AdminLayout from '../commponents/layouts/AdminLayout.vue'
 import { VTButtonAction, VTIconAddUser, VTIconPlus, VTToastService } from '@ocph23/vtocph23'
+import ActionComponent from '../commponents/ActionComponent.vue';
+
+
 // Ambil nilai search dari props (jika ada di URL)
 const props = defineProps({
     auditis: Array,
+    auth: Object
 })
+
+const isAdmin = computed(() => {
+    if (!props.auth || !props.auth.user) return false;
+    return props.auth.user.roles.includes('admin');
+});
 
 // Inisialisasi reactive search
 const search = ref(usePage().props.filters?.search || '')

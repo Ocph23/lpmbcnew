@@ -16,7 +16,7 @@ return new class extends Migration
             $table->text('visimisi')->nullable();
             $table->text('sejarah')->nullable();
             $table->text('deskripsilpm')->nullable();
-            $table->string('struktur_organisasi_path', 500);
+            $table->text('struktur_organisasi_path')->nullable();
             $table->timestamps();
         });
     }

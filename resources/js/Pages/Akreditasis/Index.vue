@@ -21,7 +21,7 @@
                         <input type="number" v-model="form.peringkat_a"
                             class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" />
                         <div v-if="form.errors.peringkat_a" class="text-red-500 text-sm mt-1">{{ form.errors.peringkat_a
-                        }}
+                            }}
                         </div>
                     </div>
                     <div class="mb-6">
@@ -29,7 +29,7 @@
                         <input type="number" v-model="form.baik_sekali"
                             class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" />
                         <div v-if="form.errors.baik_sekali" class="text-red-500 text-sm mt-1">{{ form.errors.baik_sekali
-                        }}
+                            }}
                         </div>
                     </div>
                     <div class="mb-6">
@@ -44,7 +44,7 @@
                         <input type="number" v-model="form.peringkat_b"
                             class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" />
                         <div v-if="form.errors.peringkat_b" class="text-red-500 text-sm mt-1">{{ form.errors.peringkat_b
-                        }}
+                            }}
                         </div>
                     </div>
 
@@ -74,6 +74,9 @@ import { VTButtonAction, VTIconAddUser, VTIconPlus, VTToastService } from '@ocph
 const props = defineProps({
     data: Object,
 })
+
+
+
 
 
 const form = useForm({

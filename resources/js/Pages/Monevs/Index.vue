@@ -1,6 +1,6 @@
 <!-- resources/js/Pages/Monevs/Index.vue -->
 <script setup>
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { router, usePage } from '@inertiajs/vue3'
 import AdminLayout from '../commponents/layouts/AdminLayout.vue'
 import { VTButtonAction, VTIconPlus } from '@ocph23/vtocph23'
@@ -10,8 +10,13 @@ import FlashMessage from '../commponents/FlashMessage.vue'
 const props = defineProps({
     monevs: Array,
     periodes: Array,
+    auth: Object
 })
 
+const isAdmin = computed(() => {
+    if (!props.auth || !props.auth.user) return false;
+    return props.auth.user.roles.includes('admin');
+});
 const search = ref(usePage().props.filters?.search || '')
 const periodeFilter = ref(usePage().props.filters?.periode_id || '')
 
@@ -55,7 +60,7 @@ const destroy = (id) => {
         <div class="p-2">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold">Data Monev</h1>
-                <VTButtonAction :url="route('monevs.create')" :style="'success'">
+                <VTButtonAction v-if="isAdmin" :url="route('monevs.create')" :style="'success'">
                     <VTIconPlus />
                 </VTButtonAction>
             </div>

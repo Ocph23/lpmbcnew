@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use ReflectionFunction;
 use Symfony\Component\HttpFoundation\Response;
 
 class RoleMiddleware
@@ -13,15 +15,22 @@ class RoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, string $role = null): Response
     {
+        $closure = $next; // the closure shown above
+        $reflection = new ReflectionFunction($closure);
+        $vars = $reflection->getStaticVariables();
+
         if (!auth()->check()) {
             return redirect('/login');
         }
 
         $user = auth()->user();
-        if (!$user->role || !in_array($user->role->role_name, $roles)) {
-            abort(403, 'Unauthorized');
+        $roles = $user->roles;
+        if ($role) {
+            if (!$roles || !in_array($role, $roles->pluck('role_name')->toArray())) {
+                abort(403, 'Unauthorized');
+            }
         }
 
         return $next($request);

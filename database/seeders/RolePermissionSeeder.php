@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 class RolePermissionSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeds.p
      */
     public function run(): void
     {

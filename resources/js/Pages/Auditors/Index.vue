@@ -1,6 +1,6 @@
 <!-- resources/js/Pages/Auditors/Index.vue -->
 <script setup>
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { router, usePage } from '@inertiajs/vue3'
 import AdminLayout from '../commponents/layouts/AdminLayout.vue'
 import { VTButtonAction, VTIconPlus } from '@ocph23/vtocph23'
@@ -14,6 +14,11 @@ const props = defineProps({
 const route = window.route
 
 const search = ref(usePage().props.filters?.search || '')
+
+const isAdmin = computed(() => {
+    if (!props.auth || !props.auth.user) return false;
+    return props.auth.user.roles.includes('admin');
+});
 
 let searchTimeout
 watch(search, (newVal) => {
@@ -43,7 +48,7 @@ const kategoriLabel = (kategori) => {
         <div class="p-6">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold">Daftar Auditor</h1>
-                <VTButtonAction :url="route('auditors.create')" :style="'success'">
+                <VTButtonAction v-if="isAdmin" :url="route('auditors.create')" :style="'success'">
                     <VTIconPlus />
                 </VTButtonAction>
             </div>
@@ -98,7 +103,7 @@ const kategoriLabel = (kategori) => {
                             </td>
                             <td
                                 class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end gap-2">
-                                <ActionComponent :is-authenticated="auth.isAuthenticated">
+                                <ActionComponent :is-authenticated="isAdmin">
                                     <VTButtonAction :url="route('auditors.edit', auditor.id)" type="edit"
                                         :style="'warning'" />
                                     <VTButtonAction @click="destroy(auditor.id)" type="delete" :style="'danger'" />

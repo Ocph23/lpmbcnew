@@ -34,7 +34,7 @@ class IdentitasController extends Controller
         $identitas = Identitas::firstOrNew();
         $identitas->fill($request->only(['visimisi']));
         $identitas->save();
-        return Inertia::render('Identitas/EditVisiMisi', compact('identitas'))->with('success', 'Data identitas berhasil diperbarui.');
+        return to_route('identitas.visimisi')->with('success', 'Data  berhasil diperbarui.');
     }
 
 
@@ -60,7 +60,7 @@ class IdentitasController extends Controller
         $identitas = Identitas::firstOrNew();
         $identitas->fill($request->only(['sejarah']));
         $identitas->save();
-        return redirect()->route('identitas.sejarah')->with('success', 'Data identitas berhasil diperbarui.');
+        return to_route('identitas.sejarah')->with('success', 'Data  berhasil diperbarui.');
     }
 
 
@@ -87,7 +87,6 @@ class IdentitasController extends Controller
 
         $identitas->fill($request->only(['struktur_organisasi_path']));
         $identitas->save();
-
-        return redirect()->route('identitas.organisasi')->with('success', 'Data identitas berhasil diperbarui.');
+        return to_route('identitas.organisasi')->with('success', 'Data  berhasil diperbarui.');
     }
 }
