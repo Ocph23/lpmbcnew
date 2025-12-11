@@ -2,6 +2,9 @@
 <html lang="en">
 
 <head>
+    <script src="https://cdn.tiny.cloud/1/lwhucj9f45uana41awc6buuw14f2ncf0rrcvojsmkw3sshun/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @inertiaHead
     @routes

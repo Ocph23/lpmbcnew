@@ -1,6 +1,6 @@
 <!-- resources/js/Pages/DokumenMutus/Create.vue -->
 <script setup>
-import { useForm } from '@inertiajs/vue3'
+import { Link, useForm } from '@inertiajs/vue3'
 import AdminLayout from '../commponents/layouts/AdminLayout.vue'
 import { VTButtonAction } from '@ocph23/vtocph23'
 import helper from '../../helper';
@@ -8,6 +8,7 @@ import helper from '../../helper';
 const props = defineProps({
     units: Array,
     kategori: String,
+    hasUnit: Boolean,
 })
 
 const route = window.route
@@ -30,6 +31,8 @@ const submit = () => {
     })
 }
 
+
+
 // Opsi dropdown
 const sasaranOptions = ['Internal', 'Eksternal']
 const jenisDocumentOptions = ['Upload', 'Link Eksternal']
@@ -39,10 +42,7 @@ const jenisDocumentOptions = ['Upload', 'Link Eksternal']
     <AdminLayout>
         <div class="p-6 max-w-3xl mx-auto">
             <div class="flex items-center mb-6">
-                <VTButtonAction :url="route('dokumen-mutus.index')" :style="'secondary'">
-                    <VTIconArrowLeft />
-                </VTButtonAction>
-                <h1 class="text-2xl font-bold ml-3">Tambah {{ kategori }}</h1>
+                <h1 class="text-2xl font-bold ">Tambah {{ kategori }}</h1>
             </div>
 
             <form @submit.prevent="submit" class="space-y-6">
@@ -89,7 +89,7 @@ const jenisDocumentOptions = ['Upload', 'Link Eksternal']
                 </div>
 
                 <!-- Unit -->
-                <div>
+                <div v-if="hasUnit">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Unit</label>
                     <select v-model="form.unit_id"
                         class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
@@ -134,7 +134,7 @@ const jenisDocumentOptions = ['Upload', 'Link Eksternal']
                         class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Masukkan Link External" />
                     <div v-if="form.errors.document_path" class="text-red-500 text-sm mt-1">{{ form.errors.document_path
-                    }}</div>
+                        }}</div>
                 </div>
 
                 <!-- Aksi -->
@@ -144,9 +144,12 @@ const jenisDocumentOptions = ['Upload', 'Link Eksternal']
                         :disabled="form.processing">
                         Simpan
                     </button>
-                    <VTButtonAction :url="route('dokumen-mutus.index')" :style="'secondary'">
+
+                    <Link :href="route('dokumen-mutus.filter', kategori)"
+                        class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         Batal
-                    </VTButtonAction>
+                    </Link>
+
                 </div>
             </form>
         </div>

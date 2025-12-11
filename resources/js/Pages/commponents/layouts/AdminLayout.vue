@@ -3,6 +3,8 @@ import { ref } from 'vue'
 import AdminSidebar from './AdminSidebar.vue'
 import { VTBusyProgressView, VTDialogView, VTToastView, VTCard } from '@ocph23/vtocph23'
 import FlashMessage from '../FlashMessage.vue'
+import MainHeader from './MainHeader.vue'
+
 
 const showMenu = ref(true)
 const menuClass = ref('md:ml-64')
@@ -24,7 +26,7 @@ const clickMenu = () => {
     <FlashMessage />
     <MainHeader id="header" @on-click-menu="clickMenu"></MainHeader>
     <AdminSidebar v-if="showMenu" @on-click-menu="clickMenu"></AdminSidebar>
-    <div :class="menuClass" class="min-h-screen p-4 bg-[#ffffff] shadow-md dark:bg-gray-600" id="xbody">
+    <div :class="menuClass" class="min-h-screen mt-12 p-4 bg-[#ffffff] shadow-md dark:bg-gray-600" id="xbody">
         <VTCard>
             <slot></slot>
         </VTCard>

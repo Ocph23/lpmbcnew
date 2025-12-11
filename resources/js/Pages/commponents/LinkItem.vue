@@ -1,14 +1,13 @@
 <template>
     <div @click="openMenu" :class="[
-        'flex justify-between items-center gap-2 mb-2 hover:bg-amber-600/10 rounded-md px-2 py-1',
-        isActive ? 'bg-amber-600/20' : ''
+        'cursor-pointer flex justify-between items-center gap-2 mb-2 hover:bg-amber-500 rounded-md px-2 py-1',
+        isActive ? 'bg-amber-400' : ''
     ]">
-        <div class="flex gap-2">
+        <div class="flex items-center gap-2">
             <slot name="icon"></slot>
-            <Link v-if="!isParent" :href="xUrl">{{ title }}</Link>
-            <div v-else class="cursor-pointer">{{ title }}</div>
+            <div class="cursor-pointer">{{ title }}</div>
         </div>
-        <svg class="w-3" v-if="isParent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+        <svg class="w-3 " fill="white" v-if="isParent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
             <path
                 d="M169.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 306.7 54.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
         </svg>
@@ -30,17 +29,13 @@ const emit = defineEmits(['click']);
 let xUrl = '';
 
 if (props.url) {
-    xUrl = route(props.url);
+    xUrl = route(props.url, props.param);;
 }
 
 if (props.link) {
     xUrl = props.link;
 }
 
-if (props.param) {
-    const queryString = encodeURIComponent(JSON.stringify(props.param || {}));
-    xUrl = `${xUrl}` + (props.param ? `?filter=${queryString}` : '');
-}
 
 
 const isActive = computed(() => {
@@ -51,6 +46,7 @@ const isActive = computed(() => {
         return false;
     }
 });
+
 
 
 onMounted(() => {
@@ -65,6 +61,8 @@ onMounted(() => {
 const openMenu = () => {
     if (props.isParent) {
         emit('click', props.id);
+    } else {
+        window.location.href = xUrl;
     }
 }
 

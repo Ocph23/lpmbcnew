@@ -8,7 +8,7 @@ import ActionComponent from '../commponents/ActionComponent.vue'
 
 const props = defineProps({
     Periodes: Array,
-    isAuthenticated: Boolean,
+    auth: Object,
 })
 
 const route = window.route
@@ -40,7 +40,7 @@ const destroy = (id) => {
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold">Daftar Periode</h1>
 
-                <VTButtonAction v-if="isAuthenticated" :url="route('periodes.create')" :style="'success'">
+                <VTButtonAction v-if="auth.isAuthenticated" :url="route('periodes.create')" :style="'success'">
                     <VTIconPlus />
                 </VTButtonAction>
             </div>
@@ -94,7 +94,7 @@ const destroy = (id) => {
                             </td>
                             <td
                                 class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end gap-2">
-                                <ActionComponent :is-authenticated="isAuthenticated">
+                                <ActionComponent :is-authenticated="auth.isAuthenticated">
                                     <VTButtonAction :url="route('periodes.edit', periode.id)" type="edit"
                                         :style="'warning'" />
                                     <VTButtonAction @click="destroy(periode.id)" type="delete" :style="'danger'" />

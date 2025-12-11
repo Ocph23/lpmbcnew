@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('auditi_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('periode_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('auditor_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('auditor_id')->constrained()->onDelete('cascade');
+            $table->foreignId('auditor2_id')->nullable()->constrained('auditors')->nullOnDelete();
             $table->date('start_date');
             $table->string('status')->default('terjadwal');
             $table->timestamps();

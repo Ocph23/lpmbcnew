@@ -17,19 +17,59 @@ class IdentitasController extends Controller
         return Inertia::render('Identitas/Edit', compact('identitas'));
     }
 
-    public function edit()
+    //visi & misi
+
+    public function visimisi()
     {
         $identitas = Identitas::first();
-        return Inertia::render('Identitas/Edit', compact('identitas'));
+        return Inertia::render('Identitas/EditVisiMisi', compact('identitas'));
     }
 
-    public function update(Request $request)
+    public function updatevisimisi(Request $request)
     {
         $request->validate([
             'visimisi' => 'nullable|string',
+        ]);
+
+        $identitas = Identitas::firstOrNew();
+        $identitas->fill($request->only(['visimisi']));
+        $identitas->save();
+        return Inertia::render('Identitas/EditVisiMisi', compact('identitas'))->with('success', 'Data identitas berhasil diperbarui.');
+    }
+
+
+    public function sejarah()
+    {
+        $identitas = Identitas::first();
+        return Inertia::render('Identitas/EditSejarah', compact('identitas'));
+    }
+
+
+    public function organisasi()
+    {
+        $identitas = Identitas::first()->struktur_organisasi_path;
+        return Inertia::render('Identitas/EditOrganisasi', compact('identitas'));
+    }
+
+    public function updatesejarah(Request $request)
+    {
+        $request->validate([
             'sejarah' => 'nullable|string',
-            'deskripsilpm' => 'nullable|string',
-            'struktur_organisasi' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+        ]);
+
+        $identitas = Identitas::firstOrNew();
+        $identitas->fill($request->only(['sejarah']));
+        $identitas->save();
+        return redirect()->route('identitas.sejarah')->with('success', 'Data identitas berhasil diperbarui.');
+    }
+
+
+    //sejara
+
+    public function updateorganisasi(Request $request)
+    {
+        $request->validate([
+            'struktur_organisasi' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
         ]);
 
 
@@ -45,9 +85,9 @@ class IdentitasController extends Controller
             $identitas->struktur_organisasi_path = $path;
         }
 
-        $identitas->fill($request->only(['visimisi', 'sejarah', 'deskripsilpm']));
+        $identitas->fill($request->only(['struktur_organisasi_path']));
         $identitas->save();
 
-        return redirect()->route('identitas.index')->with('success', 'Data identitas berhasil diperbarui.');
+        return redirect()->route('identitas.organisasi')->with('success', 'Data identitas berhasil diperbarui.');
     }
 }

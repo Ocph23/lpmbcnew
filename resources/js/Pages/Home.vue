@@ -43,6 +43,8 @@
                         <!--end::Container-->
                     </div>
                 </div>
+
+
             </div>
         </div>
 
@@ -56,5 +58,11 @@
 <script setup>
 import { FwbButtonGroup, FwbButton } from 'flowbite-vue'
 import AdminLayout from './commponents/layouts/AdminLayout.vue';
+import { useForm } from '@inertiajs/vue3';
+
+const form = useForm({
+    // ... field lain
+    searchQuery: '', // asumsikan ada kolom ini
+})
 
 </script>

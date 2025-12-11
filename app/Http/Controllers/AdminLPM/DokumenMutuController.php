@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\AdminLPM;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\DokumenMutuResource;
 use App\Models\DokumenMutu;
 use App\Models\Unit;
@@ -12,9 +13,38 @@ use Inertia\Inertia;
 class DokumenMutuController extends Controller
 {
     //
-    public function index(Request $request)
+    public function filter(Request $request, $param)
     {
 
+        $query = DokumenMutu::query();
+
+        $search = $request->input('search');
+
+        $query = DokumenMutu::with('unit')->where(function ($query) use ($param) {
+            if ($param) {
+                $query->where('kategori', $param);
+            }
+        });
+
+        if ($search) {
+            $query->where('kode', 'like', "%{$search}%")
+                ->orWhere('nama', 'like', "%{$search}%");
+        }
+
+        $dokumenMutus = $query->get();
+        $units = Unit::all(['id', 'unit_name']); // sesuaikan kolom unit
+
+
+
+        return Inertia::render('DokumenMutus/Index', [
+            'parameter' => $param,
+            'dokumenMutus' => DokumenMutuResource::collection($dokumenMutus)->resolve(),
+            'units' => $units,
+            'filters' => $request->only(['search']),
+        ]);
+    }
+    public function index(Request $request)
+    {
         $dataParameter = [];
 
         if ($request->filled('filter')) {
@@ -58,7 +88,8 @@ class DokumenMutuController extends Controller
     {
         $kategori = $request->query('kategori');
         $units = Unit::all(['id', 'unit_name']);
-        return Inertia::render('DokumenMutus/Create', compact('units', 'kategori'));
+        $hasUnit = in_array($kategori, ['Formulir SPMI', 'Prosedur Kerja', 'Standar UPPS|Unit']);
+        return Inertia::render('DokumenMutus/Create', compact('units', 'kategori', 'hasUnit'));
     }
 
     public function store(Request $request)
@@ -83,11 +114,12 @@ class DokumenMutuController extends Controller
             ['document_path' => $documentPath]
         ));
 
-        return to_route('dokumen-mutus.index')->with('success', 'Dokumen Mutu berhasil ditambahkan.');
+        return to_route('dokumen-mutus.filter', $request->kategori)->with('success', 'Dokumen Mutu berhasil ditambahkan.');
     }
 
     public function edit(DokumenMutu $dokumenMutu)
     {
+
         $units = Unit::all(['id', 'unit_name']);
         return Inertia::render('DokumenMutus/Edit', compact('dokumenMutu', 'units'));
     }

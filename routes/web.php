@@ -23,9 +23,9 @@ use App\Http\Controllers\LaporanController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/akreditasi/institusi', [HomeController::class, 'institusi'])->name('akreditasi.institusi');
 Route::get('/downloads', [HomeController::class, 'downloads'])->name('downloads');
-Route::view('/sejarah', 'sejarah')->name('sejarah');
-Route::view('/visi', 'visi')->name('visi');
-Route::view('/struktur', 'struktur')->name('struktur');
+Route::get('/sejarah', [HomeController::class, 'sejarah'])->name('sejarah');
+Route::get('/visi', [HomeController::class, 'visi'])->name('visi');
+Route::get('/struktur', [HomeController::class, 'struktur'])->name('struktur');
 Route::view('/renker', 'renker')->name('renker');
 Route::view('/spmi', 'spmi')->name('spmi');
 Route::view('/spme', 'spme')->name('spme');
@@ -114,8 +114,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/agenda/list', [AgendaController::class, 'list'])->name('agenda.list');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::resource('users',  UserController::class);
-});
+// Route::middleware(['auth'])->group(function () {
+//     Route::resource('users',  UserController::class);
+// });
 
 include 'adminlpm.php';

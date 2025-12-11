@@ -53,9 +53,9 @@ class PeriodeController extends Controller
         return to_route('periodes.index')->with('success', 'Periode berhasil ditambahkan.');
     }
 
-    public function edit(Periode $Periode)
+    public function edit(Periode $periode)
     {
-        return Inertia::render('Periodes/Edit', compact('Periode'));
+        return Inertia::render('Periodes/Edit', compact('periode'));
     }
 
     public function update(Request $request, Periode $Periode)

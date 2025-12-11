@@ -26,7 +26,7 @@ class AkreditasiController extends Controller
                 'peringkat_b' => 0,
             ]);
         }
-        return Inertia::render('Akreditasi/Index', [
+        return Inertia::render('Akreditasis/Index', [
             'data' => $data,
         ]);
     }
@@ -61,6 +61,31 @@ class AkreditasiController extends Controller
         $file->storeAs('sertifikat', $filename, 'public');
 
         return redirect()->back()->with('success', 'Data Sertifikat berhasil diperbarui!');
+    }
+
+    public function updateorganisasi(Request $request)
+    {
+        $request->validate([
+            'struktur_organisasi' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+
+        $identitas = Akreditasi::firstOrNew();
+        // Handle file upload
+        if ($request->hasFile('struktur_organisasi')) {
+            // Delete old file if exists
+            if ($identitas->struktur_organisasi_path) {
+                Storage::delete('public/' . $identitas->struktur_organisasi_path);
+            }
+
+            $path = $request->file('struktur_organisasi')->store('struktur', 'public');
+            $identitas->struktur_organisasi_path = $path;
+        }
+
+        $identitas->fill($request->only(['struktur_organisasi_path']));
+        $identitas->save();
+
+        return redirect()->route('identitas.organisasi')->with('success', 'Data identitas berhasil diperbarui.');
     }
 
     public function institusi()

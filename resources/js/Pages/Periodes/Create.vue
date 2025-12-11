@@ -48,8 +48,9 @@
                         :disabled="form.processing">
                         Simpan
                     </button>
-                    <Link :href="'periodes.index'" class="text-gray-600 hover:text-gray-800">
-                    Batal
+                    <Link :href="route('periodes.index')"
+                        class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                        Batal
                     </Link>
                 </div>
             </form>

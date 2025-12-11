@@ -3,7 +3,7 @@
         <!-- LOGO & TITLE -->
         <div class="nav-logo">
             <a href="#">
-                <img src="{{ asset('images/UMPPapua.png') }}" alt="Logo Jemaat Alfa Omega" />
+                <img src="{{ asset('images/UMPPapua.png') }}" alt="UMPPapua" />
             </a>
             <a href="#" class="nav-title">LPM UM Papua</a>
         </div>
@@ -70,12 +70,17 @@
             <a href="/downloads">Download</a>
         </div>
 
-        <!-- MENU KANAN -->
-        <div class="nav-right">
-            <a href="{{ route('login') }}" class="btn primary">Login</a>
-            {{-- <a href="#" class="btn primary">Register</a> --}}
-            <button id="hamburgerBtn" class="hamburger" aria-label="Buka menu">&#9776;</button>
-        </div>
+
+        @auth
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="bg-teal-400">Logout</button>
+            </form>
+        @else
+            <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+        @endauth
+
+
     </nav>
 
     <!-- BACKDROP -->

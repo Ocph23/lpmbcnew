@@ -4,6 +4,7 @@
         <FwbCard>
             <div class="p-2">
                 <h1 class="text-2xl font-bold mb-6">Identitas LPMD</h1>
+                {{ roles }}
 
                 <div v-if="identitas" class="space-y-6">
                     <div>

@@ -5,8 +5,10 @@
 
 @import "@ocph23/vtocph23/index.css";
 
+
 /* import Flowbite plugin */
 @plugin "flowbite/plugin";
+@plugin "flowbite-typography";
 
 /* add Flowbite Vue directory using @source directive. */
 @source "../../node_modules/flowbite-vue";

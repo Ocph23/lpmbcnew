@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Akreditasi;
 use App\Models\Agenda;   // <-- tambahkan ini
 use App\Models\Document;
+use App\Models\Identitas;
 use App\Models\Laporan;
 use App\Models\Standar;
 use App\Models\Unit;
@@ -33,6 +34,28 @@ class HomeController extends Controller
         $filename = "sertifikat_institusi.png";
         $data = ["filename" => $filename];
         return view('akreditasi.institusi', compact('filename'));
+    }
+
+
+    public function sejarah()
+    {
+        $identitas = Identitas::first();
+        $sejarah = $identitas ? $identitas->sejarah : '';
+        return view('sejarah', compact('sejarah'));
+    }
+
+    public function visi()
+    {
+        $identitas = Identitas::first();
+        $visimisi = $identitas ? $identitas->visimisi : '';
+        return view('visi', compact('visimisi'));
+    }
+
+    public function struktur()
+    {
+        $identitas = Identitas::first();
+        $struktur = $identitas ? $identitas->struktur_organisasi_path : '';
+        return view('struktur', compact('struktur'));
     }
 
 

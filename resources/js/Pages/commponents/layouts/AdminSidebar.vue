@@ -1,10 +1,10 @@
 <template>
-    <fwb-sidebar>
+    <aside class="sidebg p-4 absolute top-0 left-0 z-40 w-64 h-screen transition-transform">
         <fwb-sidebar-logo name="UMPPAPUA" logo="/images/UMPPapua.png" tag="router-link" />
 
         <LinkItem :link="'/adminlpm'" title="Dashboard">
             <template #icon>
-                <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                <svg class="w-4 h-4 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                     <path
                         d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
@@ -16,7 +16,7 @@
 
         <LinkItem :url="'periodes.index'" title="Periode">
             <template #icon>
-                <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                <svg class="flex-shrink-0 w-4 h-4 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
                     <path
                         d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
@@ -24,9 +24,38 @@
             </template>
         </LinkItem>
 
+
+        <LinkItem title="Identias" is-parent="true" id="identitas" @click="onClickMenu">
+            <template #icon>
+                <svg class="flex-shrink-0 w-4 h-4  text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                    fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                        d="M271.9 20.2c-9.8-5.6-21.9-5.6-31.8 0l-224 128c-12.6 7.2-18.8 22-15.1 36S17.5 208 32 208l32 0 0 208 0 0-51.2 38.4C4.7 460.4 0 469.9 0 480 0 497.7 14.3 512 32 512l448 0c17.7 0 32-14.3 32-32 0-10.1-4.7-19.6-12.8-25.6l-51.2-38.4 0-208 32 0c14.5 0 27.2-9.8 30.9-23.8s-2.5-28.8-15.1-36l-224-128zM400 208l0 208-64 0 0-208 64 0zm-112 0l0 208-64 0 0-208 64 0zm-112 0l0 208-64 0 0-208 64 0zM256 96a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
+                </svg>
+            </template>
+            <template #default>
+                <div class="ml-6">
+                    <LinkItem :url="'identitas.visimisi'" title="Visi & Misi" parent="identitas">
+                        <template #icon>
+                            <ItemIcon />
+                        </template>
+                    </LinkItem>
+                    <LinkItem :url="'identitas.sejarah'" title="Sejarah & Deskripsi LPM" parent="identitas">
+                        <template #icon>
+                            <ItemIcon />
+                        </template>
+                    </LinkItem>
+                    <LinkItem :url="'identitas.organisasi'" title="Struktur Organisasi" parent="identitas">
+                        <template #icon>
+                            <ItemIcon />
+                        </template>
+                    </LinkItem>
+                </div>
+            </template>
+        </LinkItem>
         <LinkItem id="akreditasi" title="Akreditasi" is-parent="true" v-on:click="onClickMenu">
             <template #icon>
-                <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                <svg class="flex-shrink-0 w-4 h-4 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z" />
                     <path
@@ -42,7 +71,7 @@
                             <ItemIcon />
                         </template>
                     </LinkItem>
-                    <LinkItem :url="'akreditasi.index'" title="Sertifikat  Akreditasi" parent="akreditasi">
+                    <LinkItem :url="'dokumen-akreditasi.index'" title="Sertifikat  Akreditasi" parent="akreditasi">
                         <template #icon>
                             <ItemIcon />
                         </template>
@@ -51,46 +80,9 @@
             </template>
         </LinkItem>
 
-        <LinkItem title="Identias" is-parent="true" id="identitas" @click="onClickMenu">
-            <template #icon>
-                <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z" />
-                    <path
-                        d="M6.737 11.061a2.961 2.961 0 0 1 .81-1.515l6.117-6.116A4.839 4.839 0 0 1 16 2.141V2a1.97 1.97 0 0 0-1.933-2H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18v-3.093l-1.546 1.546c-.413.413-.94.695-1.513.81l-3.4.679a2.947 2.947 0 0 1-1.85-.227 2.96 2.96 0 0 1-1.635-3.257l.681-3.397Z" />
-                    <path
-                        d="M8.961 16a.93.93 0 0 0 .189-.019l3.4-.679a.961.961 0 0 0 .49-.263l6.118-6.117a2.884 2.884 0 0 0-4.079-4.078l-6.117 6.117a.96.96 0 0 0-.263.491l-.679 3.4A.961.961 0 0 0 8.961 16Zm7.477-9.8a.958.958 0 0 1 .68-.281.961.961 0 0 1 .682 1.644l-.315.315-1.36-1.36.313-.318Zm-5.911 5.911 4.236-4.236 1.359 1.359-4.236 4.237-1.7.339.341-1.699Z" />
-                </svg>
-            </template>
-            <template #default>
-                <div class="ml-6">
-                    <LinkItem :url="'dokumen-mutus.index'" title="Visi & Misi" parent="identitas">
-                        <template #icon>
-                            <ItemIcon />
-                        </template>
-                    </LinkItem>
-                    <LinkItem :url="'dokumen-mutus.index'" title="Sejarah dan Deskripsi LPM" parent="identitas">
-                        <template #icon>
-                            <ItemIcon />
-                        </template>
-                    </LinkItem>
-                    <LinkItem :url="'dokumen-mutus.index'" title="Struktur Organisasi" parent="identitas">
-                        <template #icon>
-                            <ItemIcon />
-                        </template>
-                    </LinkItem>
-
-                    <LinkItem :url="'dokumen-mutus.index'" title="Rencana Kerja" parent="identitas">
-                        <template #icon>
-                            <ItemIcon />
-                        </template>
-                    </LinkItem>
-                </div>
-            </template>
-        </LinkItem>
         <LinkItem title="Pengelolaan Mutu" is-parent="true" id="pengelolaan-mutu" @click="onClickMenu">
             <template #icon>
-                <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                <svg class="flex-shrink-0 w-4 h-4 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z" />
                     <path
@@ -103,7 +95,8 @@
                 <div class="ml-6">
                     <h6 class="ml-1!"> <strong>SPMI</strong> </h6>
                     <LinkItem v-for="value in helper.kategoriOptions.filter(x => x.kode == 'spmi')"
-                        parent="pengelolaan-mutu" :url="'dokumen-mutus.index'" :param="value" :title="value.kategori">
+                        parent="pengelolaan-mutu" :url="'dokumen-mutus.filter'" :param="value.kategori"
+                        :title="value.kategori">
                         <template #icon>
                             <ItemIcon />
                         </template>
@@ -111,7 +104,8 @@
 
                     <h6 class="ml-1! mt-5"> <strong>SPME</strong> </h6>
                     <LinkItem v-for="value in helper.kategoriOptions.filter(x => x.kode == 'spme')"
-                        parent="pengelolaan-mutu" :url="'dokumen-mutus.index'" :param="value" :title="value.kategori">
+                        parent="pengelolaan-mutu" :url="'dokumen-mutus.filter'" :param="value.kategori"
+                        :title="value.kategori">
                         <template #icon>
                             <ItemIcon />
                         </template>
@@ -122,7 +116,7 @@
 
         <LinkItem title="Audit" is-parent="true" id="audit" @click="onClickMenu">
             <template #icon>
-                <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                <svg class="flex-shrink-0 w-4 h-4 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z" />
                     <path
@@ -143,12 +137,18 @@
                             <ItemIcon />
                         </template>
                     </LinkItem>
+
+                    <LinkItem url="auditors.index" title="Daftar Auditor" parent="audit">
+                        <template #icon>
+                            <ItemIcon />
+                        </template>
+                    </LinkItem>
                 </div>
             </template>
         </LinkItem>
         <LinkItem url="monevs.index" title="Monev">
             <template #icon>
-                <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                <svg class="flex-shrink-0 w-4 h-4 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
                     <path
                         d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
@@ -158,20 +158,66 @@
             <template #default>
             </template>
         </LinkItem>
-    </fwb-sidebar>
-    <slot></slot>
+
+        <LinkItem v-if="auth.isAuthenticated && auth.user?.roles.includes('admin')" url="users.index" title="Users">
+            <template #icon>
+                <svg class="flex-shrink-0 w-4 h-4 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z" />
+                    <path
+                        d="M6.737 11.061a2.961 2.961 0 0 1 .81-1.515l6.117-6.116A4.839 4.839 0 0 1 16 2.141V2a1.97 1.97 0 0 0-1.933-2H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18v-3.093l-1.546 1.546c-.413.413-.94.695-1.513.81l-3.4.679a2.947 2.947 0 0 1-1.85-.227 2.96 2.96 0 0 1-1.635-3.257l.681-3.397Z" />
+                    <path
+                        d="M8.961 16a.93.93 0 0 0 .189-.019l3.4-.679a.961.961 0 0 0 .49-.263l6.118-6.117a2.884 2.884 0 0 0-4.079-4.078l-6.117 6.117a.96.96 0 0 0-.263.491l-.679 3.4A.961.961 0 0 0 8.961 16Zm7.477-9.8a.958.958 0 0 1 .68-.281.961.961 0 0 1 .682 1.644l-.315.315-1.36-1.36.313-.318Zm-5.911 5.911 4.236-4.236 1.359 1.359-4.236 4.237-1.7.339.341-1.699Z" />
+                </svg>
+            </template>
+
+        </LinkItem>
+
+        <div v-if="auth.isAuthenticated" :class="[
+            'cursor-pointer flex justify-start items-center gap-2 mb-2 hover:bg-amber-500 rounded-md px-2 py-1',
+            isActive ? 'bg-amber-400' : ''
+        ]">
+            <svg class="flex-shrink-0 w-4 h-4 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
+                <path
+                    d="M160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 32C43 32 0 75 0 128L0 384c0 53 43 96 96 96l64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l64 0zM502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 192 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128z" />
+            </svg>
+            <button @click="logout" class="bg-teal-400">Logout</button>
+        </div>
+
+
+        <LinkItem v-else :link="'/login'" title="Login">
+            <template #icon>
+                <svg class="flex-shrink-0 w-4 h-4 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
+                    <path
+                        d="M160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 32C43 32 0 75 0 128L0 384c0 53 43 96 96 96l64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l64 0zM502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 192 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128z" />
+                </svg>
+            </template>
+
+        </LinkItem>
+
+
+
+
+    </aside>
 </template>
 <script setup>
 
-import { Link } from '@inertiajs/vue3';
+import { Link, router, usePage } from '@inertiajs/vue3';
 import { VTSidebarItem } from '@ocph23/vtocph23'
 import { FwbSidebar, FwbSidebarItem, FwbSidebarDropdownItem, FwbSidebarLogo } from 'flowbite-vue'
 import LinkItem from '../LinkItem.vue';
 import ItemIcon from '../ItemIcon.vue';
 import helper from '../../../helper';
 import { onMounted, ref } from 'vue';
+import LinkItemPost from '../LinkItemPost.vue';
 
 const route = window.route;
+
+const auth = usePage().props.auth;
+
+console.log(auth);
 
 const goto = (url) => {
     route(url);
@@ -197,11 +243,45 @@ const onClickMenu = (id) => {
         }
     }
 };
+
+function logout() {
+    router.post(route('logout'))
+}
 </script>
 
 
 <style scoped>
 a {
     font-size: 10px !important;
+}
+
+
+.sidebg {
+    /* background-image: linear-gradient(148.6deg, rgba(180, 214, 242, 1) 11.2%, rgba(72, 67, 221, 0.72) 100.2%) !important; */
+    /* 1. Pengaturan Dimensi */
+    width: 250px;
+    height: 100vh;
+    /* Mengisi tinggi layar penuh */
+    position: fixed;
+    /* Jika sidebar berada di sebelah kiri/kanan */
+    z-index: 100;
+
+    /* 2. Latar Belakang Gradien */
+    background: linear-gradient(180deg,
+            #1A2035 0%,
+            /* Warna awal: Biru tua */
+            #121524 100%
+            /* Warna akhir: Ungu gelap kehitaman */
+        );
+
+    /* 3. Aksen Pemisah (Shadow/Border) */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.4);
+    /* Shadow samar di sisi kanan */
+
+    /* 4. Warna Teks Default */
+    color: #E0E0E0;
+    /* Teks harus sangat terang */
+
+    /* Font dan padding lainnya dapat ditambahkan di sini */
 }
 </style>

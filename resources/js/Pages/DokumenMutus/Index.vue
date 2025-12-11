@@ -3,14 +3,23 @@
 import { ref, watch } from 'vue'
 import { router, usePage } from '@inertiajs/vue3'
 import AdminLayout from '../commponents/layouts/AdminLayout.vue'
-import { VTButtonAction, VTIconEye, VTIconPlus, VTStatus } from '@ocph23/vtocph23'
+import { VTButtonAction, VTIconEye, VTIconEyeSlash, VTIconPlus, VTStatus } from '@ocph23/vtocph23'
 import ActionComponent from '../commponents/ActionComponent.vue'
 
 const props = defineProps({
     dokumenMutus: Array,
     units: Array,
-    parameter: Object,
+    parameter: String,
+    auth: Object,
 })
+
+
+const hasUnit = ref(false)
+
+const firstData = props.dokumenMutus[0] || null
+if (firstData && firstData.unit) {
+    hasUnit.value = true
+}
 
 const search = ref(usePage().props.filters?.search || '')
 
@@ -38,9 +47,9 @@ const destroy = (id) => {
     <AdminLayout>
         <div class="p-2">
             <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-bold">Dokumen {{ parameter.kategori }}</h1>
-                <VTButtonAction v-if="isAuthenticated"
-                    :url="route('dokumen-mutus.create', { kategori: parameter.kategori })" :style="'success'">
+                <h1 class="text-2xl font-bold">Dokumen {{ parameter }}</h1>
+                <VTButtonAction v-if="auth.isAuthenticated"
+                    :url="route('dokumen-mutus.create', { kategori: parameter })" :style="'success'">
                     <VTIconPlus />
                 </VTButtonAction>
             </div>
@@ -68,11 +77,11 @@ const destroy = (id) => {
                                 Kode</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Nama</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Sasaran</th>
-                            <th v-if="parameter.unit"
+                            <th v-if="hasUnit"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Unit</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Sasaran</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Akses</th>
                             <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -83,20 +92,22 @@ const destroy = (id) => {
                         <tr v-for="doc in dokumenMutus" :key="doc.id">
                             <td class="px-6 py-4 whitespace-nowrap">{{ doc.kode }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ doc.nama }}</td>
+                            <td v-if="hasUnit" class="px-6 py-4 whitespace-nowrap">{{ doc.unit.unit_name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <VTStatus :text="doc.sasaran"
                                     :type="doc.sasaran === 'Internal' ? 'warning' : 'success'" />
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <a v-if="doc.sasaran == 'Eksternal' || doc.auth" :href="doc.document_path"
+                                <a v-if="doc.sasaran == 'Eksternal' || auth.isAuthenticated" :href="doc.document_path"
                                     target="_blank" class="text-blue-600 hover:underline">
                                     <VTIconEye @click="route(doc.document_path)" :color="'success'" v-if="parameter"
-                                        :size="'xl'" />
+                                        :size="'lg'" />
                                 </a>
+                                <VTIconEyeSlash :color="'default'" v-else :size="'lg'" />
                             </td>
                             <td
                                 class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end gap-2">
-                                <ActionComponent :is-authenticated="isAuthenticated">
+                                <ActionComponent :is-authenticated="auth.isAuthenticated">
                                     <VTButtonAction :url="route('dokumen-mutus.edit', doc.id)" :type="'edit'"
                                         :style="'warning'" />
                                     <VTButtonAction @click="destroy(doc.id)" type="delete" :style="'danger'" />

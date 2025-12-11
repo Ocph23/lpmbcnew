@@ -1,6 +1,6 @@
 <template>
     <div class="flex items-center gap-1">
-        <div v-if="isAuthenticated">
+        <div v-if="isAuthenticated" class="flex">
             <slot></slot>
         </div>
         <div v-else class="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
