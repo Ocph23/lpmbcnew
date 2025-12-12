@@ -14,7 +14,7 @@ class DocumentController extends Controller
 {
     public function index()
     {
-        $documents = Document::with('unit', 'standard', 'uploadedBy')
+        $documents = Document::with('uploadedBy')
             ->latest()
             ->get();
         return view('admin.documents.index', compact('documents'));

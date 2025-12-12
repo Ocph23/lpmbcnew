@@ -1,4 +1,15 @@
 const helper = {
+    downloadOptions: [
+        { kode: 'dasarhukum', kategori: 'Dasar Humum' },
+        { kode: 'skpendirian', kategori: 'Sk Pendirian/Izin Prodi, Institusi ' },
+        { kode: 'pedoman', kategori: 'Pedoman' },
+        { kode: 'template', kategori: 'Template' },
+        { kode: 'skrektor', kategori: 'SK Rektor' },
+        { kode: 'spmidanami', kategori: 'SPMI & AMI' },
+        { kode: 'panduankurikulum', kategori: 'Panduan Kurikulum' },
+    ],
+
+
     kategoriOptions: [
         { kode: 'spmi', kategori: 'Kebijakan SPMI', unit: false },
         { kode: 'spmi', kategori: 'Manual Mutu', unit: false },
@@ -6,7 +17,7 @@ const helper = {
         { kode: 'spmi', kategori: 'Prosedur Mutu', unit: false },
         { kode: 'spme', kategori: 'Borang Akreditasi', unit: false },
         { kode: 'spme', kategori: 'Hasil Akreditasi', unit: false },
-        { kode: 'spme', kategori: 'SK Rektor', unit: false },
+        { kode: 'spme', kategori: 'Tindak Lanjut Akreditasi', unit: false },
         { kode: 'spmi', kategori: 'Formulir SPMI', unit: true },
         { kode: 'spmi', kategori: 'Prosedur Kerja', unit: true },
         { kode: 'spmi', kategori: 'Standar UPPS|Unit', unit: true },

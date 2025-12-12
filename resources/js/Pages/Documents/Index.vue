@@ -1,25 +1,17 @@
-<!-- resources/js/Pages/DokumenMutus/Index.vue -->
+<!-- resources/js/Pages/documents/Index.vue -->
 <script setup>
 import { computed, ref, watch } from 'vue'
 import { router, usePage } from '@inertiajs/vue3'
 import AdminLayout from '../commponents/layouts/AdminLayout.vue'
 import { VTButtonAction, VTIconEye, VTIconEyeSlash, VTIconPlus, VTStatus } from '@ocph23/vtocph23'
 import ActionComponent from '../commponents/ActionComponent.vue'
+import helper from '../../helper'
 
 const props = defineProps({
-    dokumenMutus: Array,
-    units: Array,
-    parameter: String,
+    documents: Array,
     auth: Object,
+    param: String
 })
-
-
-const hasUnit = ref(false)
-
-const firstData = props.dokumenMutus[0] || null
-if (firstData && firstData.unit) {
-    hasUnit.value = true
-}
 
 const isAdmin = computed(() => {
     if (!props.auth || !props.auth.user) return false;
@@ -31,7 +23,7 @@ let searchTimeout
 watch(search, (newVal) => {
     clearTimeout(searchTimeout)
     searchTimeout = setTimeout(() => {
-        router.get(route('dokumen-mutus.index'), { search: newVal || null }, {
+        router.get(route('documents.index',), { search: newVal || null }, {
             preserveState: true,
             replace: true,
         })
@@ -42,7 +34,7 @@ const route = window.route
 
 const destroy = (id) => {
     if (confirm('Yakin hapus dokumen ini?')) {
-        router.delete(route('dokumen-mutus.destroy', id))
+        router.delete(route('documents.destroy', id))
     }
 }
 </script>
@@ -51,8 +43,8 @@ const destroy = (id) => {
     <AdminLayout>
         <div class="p-2">
             <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-bold">Dokumen {{ parameter }}</h1>
-                <VTButtonAction v-if="isAdmin" :url="route('dokumen-mutus.create', parameter)" :style="'success'">
+                <h1 class="text-2xl font-bold">{{helper.downloadOptions.find(x => x.kode == param).kategori}}</h1>
+                <VTButtonAction v-if="isAdmin" :url="route('documents.create', param)" :style="'success'">
                     <VTIconPlus />
                 </VTButtonAction>
             </div>
@@ -80,9 +72,6 @@ const destroy = (id) => {
                                 Kode</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Nama</th>
-                            <th v-if="hasUnit"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Unit</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Sasaran</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -92,33 +81,31 @@ const destroy = (id) => {
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        <tr v-for="doc in dokumenMutus" :key="doc.id">
+                        <tr v-for="doc in documents" :key="doc.id">
                             <td class="px-6 py-4 whitespace-nowrap">{{ doc.kode }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ doc.nama }}</td>
-                            <td v-if="hasUnit" class="px-6 py-4 whitespace-nowrap">{{ doc.unit.unit_name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <VTStatus :text="doc.sasaran"
                                     :type="doc.sasaran === 'Internal' ? 'warning' : 'success'" />
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <a v-if="doc.sasaran == 'Eksternal' || auth.isAuthenticated" :href="doc.document_path"
+                                <a v-if="doc.sasaran != 'Internal' || auth.isAuthenticated" :href="doc.document_path"
                                     target="_blank" class="text-blue-600 hover:underline">
-                                    <VTIconEye @click="route(doc.document_path)" :color="'success'" v-if="parameter"
-                                        :size="'lg'" />
+                                    <VTIconEye @click="route(doc.document_path)" :color="'success'" :size="'lg'" />
                                 </a>
-                                <VTIconEyeSlash :color="'default'" v-else :size="'lg'" />
+                                <VTIconEyeSlash class="text-gray-400" v-else :size="'lg'" />
                             </td>
                             <td
                                 class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end gap-2">
                                 <ActionComponent :is-authenticated="isAdmin">
-                                    <VTButtonAction :url="route('dokumen-mutus.edit', doc.id)" :type="'edit'"
+                                    <VTButtonAction :url="route('documents.edit', doc.id)" :type="'edit'"
                                         :style="'warning'" />
                                     <VTButtonAction @click="destroy(doc.id)" type="delete" :style="'danger'" />
                                 </ActionComponent>
 
                             </td>
                         </tr>
-                        <tr v-if="dokumenMutus.length === 0">
+                        <tr v-if="documents?.length === 0">
                             <td colspan="8" class="px-6 py-4 text-center text-gray-500">
                                 Tidak ada data ditemukan.
                             </td>

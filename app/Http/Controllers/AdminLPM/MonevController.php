@@ -12,12 +12,12 @@ use Inertia\Inertia;
 class MonevController extends Controller
 {
     //
-    public function index(Request $request)
+    public function akademik(Request $request)
     {
         $search = $request->input('search');
         $selectedPeriode = $request->input('periode_id');
 
-        $query = Monev::with('periode');
+        $query = Monev::with('periode')->where('status', '=', 'Akademik');
 
         if ($search) {
             $query->where('kode_monev', 'like', "%{$search}%")
@@ -32,6 +32,33 @@ class MonevController extends Controller
         $periodes = Periode::all(['id', 'year', 'semester']);
 
         return Inertia::render('Monevs/Index', [
+            'status' => 'Akademik',
+            'monevs' => $monevs,
+            'periodes' => $periodes,
+            'filters' => $request->only(['search', 'periode_id']),
+        ]);
+    }
+    public function nonakademik(Request $request)
+    {
+        $search = $request->input('search');
+        $selectedPeriode = $request->input('periode_id');
+
+        $query = Monev::with('periode')->where('status', '=', 'Non Akademik');
+
+        if ($search) {
+            $query->where('kode_monev', 'like', "%{$search}%")
+                ->orWhere('nama_monev', 'like', "%{$search}%");
+        }
+
+        if ($selectedPeriode) {
+            $query->where('periode_id', $selectedPeriode);
+        }
+
+        $monevs = $query->get();
+        $periodes = Periode::all(['id', 'year', 'semester']);
+
+        return Inertia::render('Monevs/Index', [
+            'status' => 'Non Akademik',
             'monevs' => $monevs,
             'periodes' => $periodes,
             'filters' => $request->only(['search', 'periode_id']),

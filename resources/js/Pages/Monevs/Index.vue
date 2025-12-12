@@ -25,7 +25,7 @@ let searchTimeout
 watch(search, (newVal) => {
     clearTimeout(searchTimeout)
     searchTimeout = setTimeout(() => {
-        router.get(route('monevs.index'), {
+        router.get(route('monevs.akreditasi'), {
             search: newVal || null,
             periode_id: periodeFilter.value || null
         }, {
@@ -37,7 +37,7 @@ watch(search, (newVal) => {
 
 // Watch periode filter
 watch(periodeFilter, (newVal) => {
-    router.get(route('monevs.index'), {
+    router.get(route('monevs.akreditasi'), {
         search: search.value || null,
         periode_id: newVal || null
     }, {

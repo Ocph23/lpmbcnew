@@ -135,7 +135,7 @@ const jenisDocumentOptions = ['Upload', 'Link Eksternal']
                         class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Masukkan Link External" />
                     <div v-if="form.errors.document_path" class="text-red-500 text-sm mt-1">{{ form.errors.document_path
-                    }}</div>
+                        }}</div>
                 </div>
 
                 <!-- Aksi -->
@@ -146,10 +146,10 @@ const jenisDocumentOptions = ['Upload', 'Link Eksternal']
                         Simpan
                     </button>
 
-                    <Link :href="route('dokumen-mutus.filter', kategori)"
+                    <!-- <Link :href="route('dokumen-mutus.filter', kategori)"
                         class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         Batal
-                    </Link>
+                    </Link> -->
 
                 </div>
             </form>

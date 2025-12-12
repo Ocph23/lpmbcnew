@@ -45,8 +45,8 @@ Route::view('/sambutan-detail', 'pages.sambutan-detail')->name('sambutan.detail'
 // Autentikasi
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
-Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.form');
-Route::post('/register', [AuthController::class, 'register'])->name('register');
+// Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.form');
+// Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::view('/forgot-password', 'auth.forgot-password')->name('password.request');
 Route::get('/calendar', [AgendaController::class, 'index'])->name('calendar');
@@ -84,8 +84,8 @@ Route::middleware(['auth'])->group(function () {
 
     //documents
 
-    Route::resource('/admin/documents', DocumentController::class);
-    Route::get('/documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
+    // Route::resource('/admin/documents', DocumentController::class);
+    // Route::get('/documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
 
 
     //schedule

@@ -84,9 +84,9 @@ class DokumenMutuController extends Controller
     //     ]);
     // }
 
-    public function create(Request $request)
+    public function create(Request $request, $param)
     {
-        $kategori = $request->query('kategori');
+        $kategori = $param;
         $auditis = Auditi::all(['id', 'name']);
         $hasauditi = in_array($kategori, ['Formulir SPMI', 'Prosedur Kerja', 'Standar UPPS|auditi']);
         return Inertia::render('DokumenMutus/Create', compact('auditis', 'kategori', 'hasauditi'));
@@ -155,7 +155,7 @@ class DokumenMutuController extends Controller
             ['document_path' => $documentPath]
         ));
 
-        return to_route('dokumen-mutus.index')->with('success', 'Dokumen Mutu berhasil diperbarui.');
+        return to_route('dokumen-mutus.filter', $request->kategori)->with('success', 'Dokumen Mutu berhasil diperbarui.');
     }
 
     public function destroy(DokumenMutu $dokumenMutu)

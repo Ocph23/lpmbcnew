@@ -55,16 +55,14 @@ const peringkatOptions = ['Unggul', 'A', 'Baik Sekali', 'Baik', 'B', 'C', 'Terak
                 </div>
 
                 <!-- Lembaga Akreditasi -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Lembaga Akreditasi *</label>
-                    <select v-model="form.lembaga_akreditasi"
-                        class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        <option v-for="opt in lembagaOptions" :key="opt" :value="opt">
-                            {{ opt }}
-                        </option>
-                    </select>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Lembaga Akreditasi</label>
+                    <input v-model="form.lembaga_akreditasi" type="text"
+                        class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Masukkan Lembaga Akreditasi" />
                     <div v-if="form.errors.lembaga_akreditasi" class="text-red-500 text-sm mt-1">{{
-                        form.errors.lembaga_akreditasi }}</div>
+                        form.errors.lembaga_akreditasi }}
+                    </div>
                 </div>
 
                 <!-- Jenjang -->

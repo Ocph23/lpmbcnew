@@ -1,9 +1,10 @@
 <template>
-    <div class="flex items-center gap-1">
+    <div class="flex justify-center items-center gap-1">
         <div v-if="isAuthenticated">
             <slot></slot>
         </div>
-        <div v-else class="bg-teal-400 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+        <div v-else
+            class="bg-teal-400 text-white px-3 py-1 rounded-full text-xs font-semibold flex justify-center items-center gap-1">
             <a :href="link" class="flex gap-1" target="_blank" rel="noopener noreferrer">
                 <svg class="w-3" fill="white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                     <path
@@ -20,7 +21,8 @@ import { VTIconEyeSlash, VTIconSupport } from '@ocph23/vtocph23';
 
 const props = defineProps<{
     link: String,
-    title: String
+    title: String,
+    isAuthenticated: Boolean
 }>()
 
 </script>

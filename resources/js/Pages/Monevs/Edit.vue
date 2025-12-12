@@ -110,7 +110,7 @@ const submit = () => {
                         :disabled="form.processing">
                         Simpan
                     </button>
-                    <VTButtonAction :url="route('jadwal-audits.index')" :style="'secondary'">
+                    <VTButtonAction :url="route('monevs.akademik')" :style="'secondary'">
                         Batal
                     </VTButtonAction>
                 </div>

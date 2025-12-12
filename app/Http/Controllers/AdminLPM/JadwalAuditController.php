@@ -35,6 +35,27 @@ class JadwalAuditController extends Controller
         ]);
     }
 
+    public function hasil(Request $request)
+    {
+        $selectedPeriode = $request->input('periode_id');
+
+        $query = JadwalAudit::with(['auditi', 'periode', 'auditor', 'auditor2'])
+            ->where('status', '=', 'terlaksana');
+
+        if ($selectedPeriode) {
+            $query->where('periode_id', $selectedPeriode);
+        }
+
+        $jadwalAudits = $query->get();
+        $periodes = Periode::all(['id', 'year', 'semester']);
+
+        return Inertia::render('JadwalAudits/Hasil', [
+            'jadwalAudits' => $jadwalAudits,
+            'periodes' => $periodes,
+            'filters' => $request->only(['periode_id']),
+        ]);
+    }
+
     public function create()
     {
         $auditis = Auditi::all(['id', 'name']);

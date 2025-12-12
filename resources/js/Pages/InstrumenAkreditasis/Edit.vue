@@ -1,58 +1,60 @@
-<!-- resources/js/Pages/DokumenMutus/Edit.vue -->
+<!-- resources/js/Pages/instrumenAkreditasis/Edit.vue -->
 <script setup>
 import { Link, useForm } from '@inertiajs/vue3'
 import AdminLayout from '../commponents/layouts/AdminLayout.vue'
-import { VTButtonAction } from '@ocph23/vtocph23'
 
 const route = window.route
 
 const props = defineProps({
-    dokumenMutu: Object,
-    units: Array,
+    instrumenAkreditasi: Object,
 })
 
 const form = useForm({
-    kode: props.dokumenMutu.kode,
-    nama: props.dokumenMutu.nama,
-    sasaran: props.dokumenMutu.sasaran,
-    unit_id: props.dokumenMutu.unit_id,
-    kategori: props.dokumenMutu.kategori,
-    jenis_document: props.dokumenMutu.jenis_document,
-    document_path: props.dokumenMutu.document_path,
+    kode: props.instrumenAkreditasi.kode,
+    nama: props.instrumenAkreditasi.nama,
+    sasaran: props.instrumenAkreditasi.sasaran,
+    jenis_document: props.instrumenAkreditasi.jenis_document,
+    document_path: props.instrumenAkreditasi.document_path,
     document: null,
 })
 
 const submit = () => {
 
-    if (form.jenis_document === 'Upload' && (!form.document && !props.dokumenMutu.document_path)) {
+    if (form.jenis_document === 'Upload' && (!form.document && !props.instrumenAkreditasi.document_path)) {
         alert('Dokumen wajib diunggah untuk status "Terlaksana"')
         return
     }
 
-    form.post(route('dokumen-mutus.update', props.dokumenMutu.id), {
-        forceFormData: true,
-        preserveScroll: true,
-    })
+
+    if (form.jenis_document !== 'Upload') {
+        form.put(route('instrumen-akreditasis.update', props.instrumenAkreditasi.id));
+    } else {
+        form.post(route('instrumen-akreditasis.updatepost', props.instrumenAkreditasi.id), {
+            forceFormData: true,
+            preserveScroll: true,
+        })
+
+    }
+
 }
 
 
 
 // Opsi dropdown
-const sasaranOptions = ['Internal', 'Eksternal']
+const sasaranOptions = ['Internal', 'Public']
 const kategoriOptions = ['Kebijakan SPMI', 'Manual Mutu', 'Prosedur', 'Instruksi Kerja', 'Formulir']
 const jenisDocumentOptions = ['Upload', 'Link Eksternal']
 
 // Cek apakah ada dokumen lama
-const hasExistingDocument = props.dokumenMutu.document_path
+const hasExistingDocument = props.instrumenAkreditasi.document_path
 </script>
 
 <template>
     <AdminLayout>
         <div class="p-6 max-w-3xl mx-auto">
             <div class="flex items-center mb-6">
-                <h1 class="text-2xl font-bold">Edit Dokumen Mutu</h1>
+                <h1 class="text-2xl font-bold">Edit Instrumen</h1>
             </div>
-
             <form @submit.prevent="submit" class="space-y-6">
                 <!-- Kode -->
                 <div>
@@ -84,31 +86,6 @@ const hasExistingDocument = props.dokumenMutu.document_path
                     <div v-if="form.errors.sasaran" class="text-red-500 text-sm mt-1">{{ form.errors.sasaran }}</div>
                 </div>
 
-                <!-- Unit -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Unit</label>
-                    <select v-model="form.unit_id"
-                        class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        <option :value="null">– Pilih Unit –</option>
-                        <option v-for="unit in units" :key="unit.id" :value="unit.id">
-                            {{ unit.unit_name }}
-                        </option>
-                    </select>
-                    <div v-if="form.errors.unit_id" class="text-red-500 text-sm mt-1">{{ form.errors.unit_id }}</div>
-                </div>
-
-                <!-- Kategori -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Kategori *</label>
-                    <select v-model="form.kategori"
-                        class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        <option v-for="kat in kategoriOptions" :key="kat" :value="kat">
-                            {{ kat }}
-                        </option>
-                    </select>
-                    <div v-if="form.errors.kategori" class="text-red-500 text-sm mt-1">{{ form.errors.kategori }}</div>
-                </div>
-
                 <!-- Jenis Dokumen -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Dokumen *</label>
@@ -131,7 +108,7 @@ const hasExistingDocument = props.dokumenMutu.document_path
 
                     <!-- Preview dokumen lama -->
                     <div v-if="hasExistingDocument" class="mb-2">
-                        <a :href="dokumenMutu.document_url" target="_blank"
+                        <a :href="instrumenAkreditasi.document_url" target="_blank"
                             class="text-blue-600 hover:underline text-sm">
                             Lihat dokumen saat ini
                         </a>
@@ -155,7 +132,7 @@ const hasExistingDocument = props.dokumenMutu.document_path
                         placeholder="Masukkan Link External" />
                     <div v-if="form.errors.document_path" class="text-red-500 text-sm mt-1">{{
                         form.errors.document_path
-                    }}</div>
+                        }}</div>
                 </div>
 
                 <!-- Aksi -->
@@ -165,7 +142,7 @@ const hasExistingDocument = props.dokumenMutu.document_path
                         :disabled="form.processing">
                         Perbarui
                     </button>
-                    <Link :href="route('dokumen-mutus.filter', dokumenMutu.kategori)"
+                    <Link :href="route('instrumen-akreditasis.index', instrumenAkreditasi.kategori)"
                         class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         Batal
                     </Link>

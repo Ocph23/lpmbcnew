@@ -16,9 +16,9 @@ const form = useForm({
     lembaga_akreditasi: props.dokumenAkreditasi.lembaga_akreditasi,
     jenjang: props.dokumenAkreditasi.jenjang,
     peringkat: props.dokumenAkreditasi.peringkat,
-    tanggal_sk: props.dokumenAkreditasi.tanggal_sk,
-    tanggal_mulai: props.dokumenAkreditasi.tanggal_mulai,
-    tanggal_berakhir: props.dokumenAkreditasi.tanggal_berakhir,
+    tanggal_sk: new Date(props.dokumenAkreditasi.tanggal_sk).toISOString().slice(0, 10),
+    tanggal_mulai: new Date(props.dokumenAkreditasi.tanggal_mulai).toISOString().slice(0, 10),
+    tanggal_berakhir: new Date(props.dokumenAkreditasi.tanggal_berakhir).toISOString().slice(0, 10),
     link_sk: props.dokumenAkreditasi.link_sk,
     link_sertifikat: props.dokumenAkreditasi.link_sertifikat,
 })
@@ -39,8 +39,8 @@ const peringkatOptions = ['Unggul', 'A', 'Baik Sekali', 'Baik', 'B', 'C', 'Terak
 <template>
     <AdminLayout>
         <div class="p-6 max-w-3xl mx-auto">
-            <div class="flex items-center mb-6">
 
+            <div class="flex items-center mb-6">
                 <h1 class="text-2xl font-bold">Edit Dokumen Akreditasi</h1>
             </div>
 
