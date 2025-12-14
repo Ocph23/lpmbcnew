@@ -36,6 +36,7 @@ Route::view('/settings', 'settings')->name('settings');
 Route::get('/laporan/spmi', [HomeController::class, 'spmi'])->name('laporan.spmi');
 Route::get('/laporan/spme', [HomeController::class, 'spme'])->name('laporan.spme');
 Route::get('/laporan/pusatdata', [HomeController::class, 'pusatdata'])->name('laporan.pusatdata');
+Route::get('/pengolahanmutu/{param}', [HomeController::class, 'pengolahanmutu'])->name('laporan.pengolahanmutu');
 
 
 // Halaman Sambutan Detail
@@ -48,12 +49,12 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 // Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.form');
 // Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::post('/logoutfromvue', [LoginController::class, 'logoutfromvue'])->name('logoutfromvue');
 Route::view('/forgot-password', 'auth.forgot-password')->name('password.request');
 Route::get('/calendar', [AgendaController::class, 'index'])->name('calendar');
 
 // Dashboard & protected routes
 Route::middleware(['auth'])->group(function () {
-    Route::view('/dashboard', 'dashboard')->name('dashboard');
 
     // Profile & Settings
     Route::post('/profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.photo');
@@ -61,61 +62,62 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/settings', [ProfileController::class, 'settings'])->name('settings');
     Route::post('/settings/password', [ProfileController::class, 'updatePassword'])->name('settings.password');
 
-    // Akreditasi
-    Route::get('/dashboard/akreditasidb', [AkreditasiController::class, 'index'])->name('dashboard.akreditasidb');
-    Route::get('/dashboard/institusi', [AkreditasiController::class, 'institusi'])->name('dashboard.institusi');
-    Route::post('/dashboard/akreditasidb/update', [AkreditasiController::class, 'update'])->name('dashboard.akreditasidb.update');
-    Route::post('/dashboard/akreditasidb/updateinstitusi', [AkreditasiController::class, 'updateinstitusi'])->name('dashboard.akreditasidb.updateinstitusi');
+    // Route::view('/dashboard', 'dashboard')->name('dashboard');
+    // // Akreditasi
+    // Route::get('/dashboard/akreditasidb', [AkreditasiController::class, 'index'])->name('dashboard.akreditasidb');
+    // Route::get('/dashboard/institusi', [AkreditasiController::class, 'institusi'])->name('dashboard.institusi');
+    // Route::post('/dashboard/akreditasidb/update', [AkreditasiController::class, 'update'])->name('dashboard.akreditasidb.update');
+    // Route::post('/dashboard/akreditasidb/updateinstitusi', [AkreditasiController::class, 'updateinstitusi'])->name('dashboard.akreditasidb.updateinstitusi');
 
-    Route::resource('/admin/roles', RoleController::class);
+    // Route::resource('/admin/roles', RoleController::class);
 
-    // Standar
+    // // Standar
 
-    Route::resource('/admin/standars', StandarController::class);
-
-
-    // Laporan
-
-    Route::resource('/admin/laporans', LaporanController::class);
-    Route::get('/laporan/{laporan}/download', [LaporanController::class, 'download'])->name('laporans.download');
-
-    //unit
-    Route::resource('/admin/units', UnitController::class); // optional: auth
-
-    //documents
-
-    // Route::resource('/admin/documents', DocumentController::class);
-    // Route::get('/documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
+    // Route::resource('/admin/standars', StandarController::class);
 
 
-    //schedule
-    Route::resource('/admin/audit-schedules', AuditScheduleController::class)
-        ->parameters(['audit-schedules' => 'auditSchedule'])
-    ;
+    // // Laporan
 
-    Route::resource('/admin/audit-instruments', AuditInstrumentController::class)
-        ->parameters(['audit-instruments' => 'auditInstrument']);
+    // Route::resource('/admin/laporans', LaporanController::class);
+    // Route::get('/laporan/{laporan}/download', [LaporanController::class, 'download'])->name('laporans.download');
 
-    Route::prefix('/admin/audit-schedules/{auditSchedule}')->group(function () {
-        Route::resource('teams', AuditTeamController::class)
-            ->parameters(['teams' => 'team'])
-        ;
+    // //unit
+    // Route::resource('/admin/units', UnitController::class); // optional: auth
 
-        Route::resource('results', AuditResultController::class)
-            ->parameters(['results' => 'result']);
+    // //documents
 
-        // Custom verification route (optional but useful)
-        Route::post('/results/{result}/verify', [AuditResultController::class, 'verify'])
-            ->name('audit-schedules.results.verify');
-    });
+    // // Route::resource('/admin/documents', DocumentController::class);
+    // // Route::get('/documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
 
-    // Agenda
-    Route::resource('agenda', AgendaController::class)->except(['create', 'show']);
-    Route::get('/agenda/list', [AgendaController::class, 'list'])->name('agenda.list');
+
+    // //schedule
+    // Route::resource('/admin/audit-schedules', AuditScheduleController::class)
+    //     ->parameters(['audit-schedules' => 'auditSchedule'])
+    // ;
+
+    // Route::resource('/admin/audit-instruments', AuditInstrumentController::class)
+    //     ->parameters(['audit-instruments' => 'auditInstrument']);
+
+    // Route::prefix('/admin/audit-schedules/{auditSchedule}')->group(function () {
+    //     Route::resource('teams', AuditTeamController::class)
+    //         ->parameters(['teams' => 'team'])
+    //     ;
+
+    //     Route::resource('results', AuditResultController::class)
+    //         ->parameters(['results' => 'result']);
+
+    //     // Custom verification route (optional but useful)
+    //     Route::post('/results/{result}/verify', [AuditResultController::class, 'verify'])
+    //         ->name('audit-schedules.results.verify');
+    // });
+
+    // // Agenda
+    // Route::resource('agenda', AgendaController::class)->except(['create', 'show']);
+    // Route::get('/agenda/list', [AgendaController::class, 'list'])->name('agenda.list');
 });
 
 // Route::middleware(['auth'])->group(function () {
 //     Route::resource('users',  UserController::class);
 // });
 
-include 'adminlpm.php';
+include 'layananlpm.php';

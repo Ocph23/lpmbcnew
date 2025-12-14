@@ -8,10 +8,14 @@ import helper from '../../helper';
 const props = defineProps({
     auditis: Array,
     kategori: String,
-    hasauditi: Boolean,
 })
 
 const route = window.route
+
+const option = helper.kategoriOptions.find(x => x.kategori == props.kategori)
+
+
+
 
 const form = useForm({
     kode: '',
@@ -42,22 +46,11 @@ const jenisDocumentOptions = ['Upload', 'Link Eksternal']
     <AdminLayout>
         <div class="p-6 max-w-3xl mx-auto">
             <div class="flex items-center mb-6">
-                <h1 class="text-2xl font-bold ">Tambah {{ kategori }}</h1>
+                <h1 class="text-2xl font-bold ">Tambah {{helper.kategoriOptions.find(x => x.kategori ==
+                    kategori).title}}</h1>
             </div>
 
             <form @submit.prevent="submit" class="space-y-6">
-                <!-- Kode -->
-                <!-- Kategori -->
-                <!-- <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Kategori *</label>
-                    <select v-model="form.kategori"
-                        class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        <option v-for="kat in helper.kategoriOptions" :key="kat" :value="kat.kategori">
-                            {{ kat.kategori }}
-                        </option>
-                    </select>
-                    <div v-if="form.errors.kategori" class="text-red-500 text-sm mt-1">{{ form.errors.kategori }}</div>
-                </div> -->
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Kode *</label>
@@ -89,7 +82,7 @@ const jenisDocumentOptions = ['Upload', 'Link Eksternal']
                 </div>
 
                 <!-- auditi -->
-                <div v-if="hasauditi">
+                <div v-if="option.unit">
                     <label class="block text-sm font-medium text-gray-700 mb-2">auditi</label>
                     <select v-model="form.auditi_id"
                         class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">

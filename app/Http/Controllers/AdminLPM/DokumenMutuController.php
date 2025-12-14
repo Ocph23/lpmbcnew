@@ -88,7 +88,7 @@ class DokumenMutuController extends Controller
     {
         $kategori = $param;
         $auditis = Auditi::all(['id', 'name']);
-        $hasauditi = in_array($kategori, ['Formulir SPMI', 'Prosedur Kerja', 'Standar UPPS|auditi']);
+        $hasauditi = in_array($kategori, ['formulir_spmi', 'prosedur_kerja', 'standar_upps_unit']);
         return Inertia::render('DokumenMutus/Create', compact('auditis', 'kategori', 'hasauditi'));
     }
 

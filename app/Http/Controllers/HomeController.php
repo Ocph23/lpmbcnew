@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Akreditasi;
 use App\Models\Agenda;   // <-- tambahkan ini
 use App\Models\Document;
+use App\Models\DokumenMutu;
 use App\Models\Identitas;
 use App\Models\Laporan;
 use App\Models\Standar;
@@ -70,14 +71,26 @@ class HomeController extends Controller
 
     public function spme()
     {
-        $laporans = Laporan::where('document_type', 'spme')
+        $spmes = ['borang_akreditasi', 'hasil_akreditasi',  'tindaklanjut_akreditasi'];
+
+        $laporans = DokumenMutu::whereIn('kategori', $spmes)->where('sasaran', 'Eksternal')
             ->get();
         return view('laporanspme', compact('laporans'));
     }
 
     public function spmi()
     {
-        $laporans = Laporan::where('document_type', 'spmi')
+        $spmis = [
+            'kebijakan_spmi',
+            'manual_mutu',
+            'standar_spmi',
+            'prosedur_mutu',
+            'formulir_spmi',
+            'prosedur_kerja',
+            'standar_upps_unit'
+        ];
+
+        $laporans = DokumenMutu::whereIn('kategori', $spmis)->where('sasaran', 'Eksternal')
             ->get();
         return view('laporanspmi', compact('laporans'));
     }
@@ -87,5 +100,28 @@ class HomeController extends Controller
         $laporans = Laporan::where('document_type', 'pusatdata')
             ->get();
         return view('laporanpusatdata', compact('laporans'));
+    }
+    public function pengolahanmutu($param)
+    {
+
+        $documents = collect([
+            ['kode' => 'spmi', 'kategori' => 'kebijakan_spmi', 'title' => 'Kebijakan SPMI', 'unit' => false],
+            ['kode' => 'spmi', 'kategori' => 'manual_mutu', 'title' => 'Manual Mutu', 'unit' => false],
+            ['kode' => 'spmi', 'kategori' => 'standar_spmi', 'title' => 'Standar SPMI', 'unit' => false],
+            ['kode' => 'spmi', 'kategori' => 'prosedur_mutu', 'title' => 'Prosedur Mutu', 'unit' => false],
+            ['kode' => 'spme', 'kategori' => 'borang_akreditasi', 'title' => 'Borang Akreditasi', 'unit' => false],
+            ['kode' => 'spme', 'kategori' => 'hasil_akreditasi', 'title' => 'Hasil Akreditasi', 'unit' => false],
+            ['kode' => 'spme', 'kategori' => 'tindaklanjut_akreditasi', 'title' => 'Tindaklanjut Akreditasi', 'unit' => false],
+            ['kode' => 'spmi', 'kategori' => 'formulir_spmi', 'title' => 'Formulir SPMI', 'unit' => true],
+            ['kode' => 'spmi', 'kategori' => 'prosedur_kerja', 'title' => 'Prosedur Kerja', 'unit' => true],
+            ['kode' => 'spmi', 'kategori' => 'standar_upps_unit', 'title' => 'Standar UPPS|Unit', 'unit' => true],
+        ]);
+
+        $document = $documents->firstWhere('kategori', $param);
+
+        $title = $document['title'];
+        $laporans = DokumenMutu::where('kategori', $param)
+            ->get();
+        return view('pengolahanmutu', compact('laporans', 'title'));
     }
 }

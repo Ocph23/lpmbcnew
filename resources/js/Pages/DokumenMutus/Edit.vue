@@ -3,19 +3,26 @@
 import { Link, useForm } from '@inertiajs/vue3'
 import AdminLayout from '../commponents/layouts/AdminLayout.vue'
 import { VTButtonAction } from '@ocph23/vtocph23'
+import helper from '../../helper';
+
 
 const route = window.route
 
 const props = defineProps({
     dokumenMutu: Object,
-    units: Array,
+    auditis: Array,
 })
+
+
+
+const option = helper.kategoriOptions.find(x => x.kategori == props.dokumenMutu.kategori)
+
 
 const form = useForm({
     kode: props.dokumenMutu.kode,
     nama: props.dokumenMutu.nama,
     sasaran: props.dokumenMutu.sasaran,
-    unit_id: props.dokumenMutu.unit_id,
+    auditi_id: props.dokumenMutu.auditi_id,
     kategori: props.dokumenMutu.kategori,
     jenis_document: props.dokumenMutu.jenis_document,
     document_path: props.dokumenMutu.document_path,
@@ -39,7 +46,7 @@ const submit = () => {
 
 // Opsi dropdown
 const sasaranOptions = ['Internal', 'Eksternal']
-const kategoriOptions = ['Kebijakan SPMI', 'Manual Mutu', 'Prosedur', 'Instruksi Kerja', 'Formulir']
+const kategoriOptions = helper.kategoriOptions.map(x => x.kategori)
 const jenisDocumentOptions = ['Upload', 'Link Eksternal']
 
 // Cek apakah ada dokumen lama
@@ -50,7 +57,8 @@ const hasExistingDocument = props.dokumenMutu.document_path
     <AdminLayout>
         <div class="p-6 max-w-3xl mx-auto">
             <div class="flex items-center mb-6">
-                <h1 class="text-2xl font-bold">Edit Dokumen Mutu</h1>
+                <h1 class="text-2xl font-bold">Edit {{helper.kategoriOptions.find(x => x.kategori ==
+                    props.dokumenMutu.kategori).title}}</h1>
             </div>
 
             <form @submit.prevent="submit" class="space-y-6">
@@ -84,29 +92,18 @@ const hasExistingDocument = props.dokumenMutu.document_path
                     <div v-if="form.errors.sasaran" class="text-red-500 text-sm mt-1">{{ form.errors.sasaran }}</div>
                 </div>
 
-                <!-- Unit -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Unit</label>
-                    <select v-model="form.unit_id"
+                <!-- auditi -->
+                <div v-if="option.unit">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Unit/Auditi</label>
+                    <select v-model="form.auditi_id"
                         class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        <option :value="null">– Pilih Unit –</option>
-                        <option v-for="unit in units" :key="unit.id" :value="unit.id">
-                            {{ unit.unit_name }}
+                        <option :value="null">– Pilih auditi –</option>
+                        <option v-for="auditi in auditis" :key="auditi.id" :value="auditi.id">
+                            {{ auditi.name }}
                         </option>
                     </select>
-                    <div v-if="form.errors.unit_id" class="text-red-500 text-sm mt-1">{{ form.errors.unit_id }}</div>
-                </div>
-
-                <!-- Kategori -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Kategori *</label>
-                    <select v-model="form.kategori"
-                        class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        <option v-for="kat in kategoriOptions" :key="kat" :value="kat">
-                            {{ kat }}
-                        </option>
-                    </select>
-                    <div v-if="form.errors.kategori" class="text-red-500 text-sm mt-1">{{ form.errors.kategori }}</div>
+                    <div v-if="form.errors.auditi_id" class="text-red-500 text-sm mt-1">{{ form.errors.auditi_id }}
+                    </div>
                 </div>
 
                 <!-- Jenis Dokumen -->
@@ -155,7 +152,7 @@ const hasExistingDocument = props.dokumenMutu.document_path
                         placeholder="Masukkan Link External" />
                     <div v-if="form.errors.document_path" class="text-red-500 text-sm mt-1">{{
                         form.errors.document_path
-                    }}</div>
+                        }}</div>
                 </div>
 
                 <!-- Aksi -->

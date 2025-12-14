@@ -5,6 +5,7 @@ import { router, usePage } from '@inertiajs/vue3'
 import AdminLayout from '../commponents/layouts/AdminLayout.vue'
 import { VTButtonAction, VTIconEye, VTIconEyeSlash, VTIconPlus, VTStatus } from '@ocph23/vtocph23'
 import ActionComponent from '../commponents/ActionComponent.vue'
+import helper from '../../helper'
 
 const props = defineProps({
     dokumenMutus: Array,
@@ -14,12 +15,8 @@ const props = defineProps({
 })
 
 
-const hasUnit = ref(false)
+const option = helper.kategoriOptions.find(x => x.kategori == props.parameter)
 
-const firstData = props.dokumenMutus[0] || null
-if (firstData && firstData.unit) {
-    hasUnit.value = true
-}
 
 const isAdmin = computed(() => {
     if (!props.auth || !props.auth.user) return false;
@@ -51,7 +48,9 @@ const destroy = (id) => {
     <AdminLayout>
         <div class="p-2">
             <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-bold">Dokumen {{ parameter }}</h1>
+                <h1 class="text-2xl font-bold">Dokumen {{helper.kategoriOptions.find(x => x.kategori ==
+                    parameter).title}}
+                </h1>
                 <VTButtonAction v-if="isAdmin" :url="route('dokumen-mutus.create', parameter)" :style="'success'">
                     <VTIconPlus />
                 </VTButtonAction>
@@ -80,9 +79,9 @@ const destroy = (id) => {
                                 Kode</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Nama</th>
-                            <th v-if="hasUnit"
+                            <th v-if="option.unit"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Unit</th>
+                                Unit | Auditi</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Sasaran</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -95,7 +94,7 @@ const destroy = (id) => {
                         <tr v-for="doc in dokumenMutus" :key="doc.id">
                             <td class="px-6 py-4 whitespace-nowrap">{{ doc.kode }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ doc.nama }}</td>
-                            <td v-if="hasUnit" class="px-6 py-4 whitespace-nowrap">{{ doc.unit.unit_name }}</td>
+                            <td v-if="option.unit" class="px-6 py-4 whitespace-nowrap">{{ doc.auditi.name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <VTStatus :text="doc.sasaran"
                                     :type="doc.sasaran === 'Internal' ? 'warning' : 'success'" />

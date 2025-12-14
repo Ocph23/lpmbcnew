@@ -33,41 +33,35 @@
                 </div>
             </div>
 
-            <!-- Laporan -->
-            <div class="dropdown">
-                <a href="#">Laporan</a>
-                <div class="dropdown-content">
-                    <a href="/laporan/spmi">Bidang SPMI</a>
-                    <a href="/laporan/spme">Bidang SPME</a>
-                    <a href="/laporan/pusatdata">Pusat data</a>
-                </div>
-            </div>
 
             <!-- Akreditasi -->
             <div class="dropdown">
                 <a href="#">Akreditasi</a>
                 <div class="dropdown-content">
-                    <a href="{{ route('akreditasi.institusi') }}">Institusi</a>
-                    <a href="#">Program Studi</a>
+                    <a href="{{ route('akreditasi.institusi') }}">Sertifikat Akreditasi</a>
                     <a href="#">Instrumen Akreditasi</a>
                 </div>
             </div>
 
             <!-- Mutu -->
             <div class="dropdown">
-                <a href="#">Mutu</a>
+                <a href="#">Pengolahan Mutu</a>
                 <div class="dropdown-content">
-                    <a href="#">Kebijakan Mutu</a>
-                    <a href="#">Standar Mutu</a>
-                    <a href="#">Manual Mutu</a>
-                    <a href="#">Capaian Sasaran Mutu</a>
-                    <a href="#">Dokumen ISO</a>
-                    <a href="#">Formulir Mutu</a>
+                    <a>SPMI</a>
+                    @foreach ([['kode' => 'spmi', 'kategori' => 'kebijakan_spmi', 'title' => 'Kebijakan SPMI', 'unit' => false], ['kode' => 'spmi', 'kategori' => 'manual_mutu', 'title' => 'Manual Mutu', 'unit' => false], ['kode' => 'spmi', 'kategori' => 'standar_spmi', 'title' => 'Standar SPMI', 'unit' => false], ['kode' => 'spmi', 'kategori' => 'prosedur_mutu', 'title' => 'Prosedur Mutu', 'unit' => false], ['kode' => 'spmi', 'kategori' => 'formulir_spmi', 'title' => 'Formulir SPMI', 'unit' => true], ['kode' => 'spmi', 'kategori' => 'prosedur_kerja', 'title' => 'Prosedur Kerja', 'unit' => true], ['kode' => 'spmi', 'kategori' => 'standar_upps_unit', 'title' => 'Standar UPPS|Unit', 'unit' => true]] as $mutu)
+                        <a style="margin-left: 20px"
+                            href="/pengolahanmutu/{{ $mutu['kategori'] }}">{{ $mutu['title'] }}</a>
+                    @endforeach
+
+                    <a>SPME</a>
+                    @foreach ([['kode' => 'spme', 'kategori' => 'borang_akreditasi', 'title' => 'Borang Akreditasi', 'unit' => false], ['kode' => 'spme', 'kategori' => 'hasil_akreditasi', 'title' => 'Hasil Akreditasi', 'unit' => false], ['kode' => 'spme', 'kategori' => 'tindaklanjut_akreditasi', 'title' => 'Tindaklanjut Akreditasi', 'unit' => false]] as $mutu)
+                        <a style="margin-left: 20px"
+                            href="/pengolahanmutu/{{ $mutu['kategori'] }}">{{ $mutu['title'] }}</a>
+                    @endforeach
+
                 </div>
             </div>
-
-            <a href="#">Berita</a>
-            <a href="/downloads">Download</a>
+            <a href="/layananlpm">Layanan LPM</a>
         </div>
 
 

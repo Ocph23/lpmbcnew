@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class LoginController extends Controller
 {
-    protected $redirectTo = '/adminlpm';
+    protected $redirectTo = '/layananlpm';
 
     public function showLoginForm()
     {
@@ -40,8 +41,13 @@ class LoginController extends Controller
     {
         Auth::logout();
         $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        return redirect('/');
+    }
 
-        return redirect()->route('login');
+    public function logoutfromvue(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        return Inertia::location('/');
     }
 }

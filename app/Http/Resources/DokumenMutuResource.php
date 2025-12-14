@@ -16,8 +16,8 @@ class DokumenMutuResource extends JsonResource
             'kategori' => $this->kategori,
             'sasaran' => $this->sasaran,
             'auth' => auth()->check(),
-            'document_path' => (auth()->check() && $this->sasaran == 'Internal') || $this->sasaran != 'Internal' ? $this->document_path : null,
-            'unit' => $this->unit,
+            'document_path' => $this->document_path,
+            'auditi' => $this->auditi,
             // ... field lainnya ...
         ];
     }

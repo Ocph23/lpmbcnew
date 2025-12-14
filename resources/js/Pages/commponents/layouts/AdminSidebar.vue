@@ -1,9 +1,9 @@
 <template>
     <aside class="sidebg p-4 absolute top-0 left-0 z-40 w-64 h-screen transition-transform overflow-auto">
-        <fwb-sidebar-logo :name="isAdmin ? 'Admin' : isPimpinan ? 'Ketua' : 'UMPPAPUA'" logo="/images/UMPPapua.png"
+        <fwb-sidebar-logo :name="isAdmin ? 'Admin' : isPimpinan ? 'Ketua' : 'Layanan LPM'" logo="/images/UMPPapua.png"
             tag="router-link" />
 
-        <LinkItem :link="'/adminlpm'" title="Dashboard">
+        <LinkItem :link="'/layananlpm'" title="Dashboard">
             <template #icon>
                 <svg class="w-4 h-4 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
@@ -119,7 +119,7 @@
                     <h6 class="ml-1!"> <strong>SPMI</strong> </h6>
                     <LinkItem v-for="value in helper.kategoriOptions.filter(x => x.kode == 'spmi')"
                         parent="pengelolaan-mutu" :url="'dokumen-mutus.filter'" :param="value.kategori"
-                        :title="value.kategori">
+                        :title="value.title">
                         <template #icon>
                             <ItemIcon />
                         </template>
@@ -128,7 +128,7 @@
                     <h6 class="ml-1! mt-5"> <strong>SPME</strong> </h6>
                     <LinkItem v-for="value in helper.kategoriOptions.filter(x => x.kode == 'spme')"
                         parent="pengelolaan-mutu" :url="'dokumen-mutus.filter'" :param="value.kategori"
-                        :title="value.kategori">
+                        :title="value.title">
                         <template #icon>
                             <ItemIcon />
                         </template>
@@ -233,8 +233,7 @@
         </LinkItem>
 
         <div v-if="auth.isAuthenticated" :class="[
-            'cursor-pointer flex justify-start items-center gap-2 mb-2 hover:bg-amber-500 rounded-md px-2 py-1',
-            isActive ? 'bg-amber-400' : ''
+            'cursor-pointer flex justify-start items-center gap-2 mb-2 hover:bg-amber-500 rounded-md px-2 py-1'
         ]">
             <svg class="flex-shrink-0 w-4 h-4 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
@@ -322,7 +321,7 @@ const onClickMenu = (id) => {
 };
 
 function logout() {
-    router.post(route('logout'))
+    router.post(route('logoutfromvue'))
 }
 </script>
 
