@@ -15,7 +15,7 @@ class InstrumenAkreditasiResource extends JsonResource
             'nama' => $this->nama,
             'sasaran' => $this->sasaran,
             'auth' => auth()->check(),
-            'document_path' => (auth()->check() && $this->sasaran == 'Internal') || $this->sasaran != 'Internal' ? $this->document_path : null,
+            'document_path' => $this->jenis_document == 'Upload' ? '/storage/' . $this->document_path : $this->document_path,
         ];
     }
 }

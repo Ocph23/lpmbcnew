@@ -91,7 +91,7 @@ class MonevController extends Controller
             ['document_path' => $documentPath]
         ));
 
-        return to_route('monevs.index')->with('success', 'Data Monev berhasil ditambahkan.');
+        return to_route($request->status == 'Akademik' ? 'monevs.akademik' : 'monevs.nonakademik')->with('success', 'Data Monev berhasil ditambahkan.');
     }
 
     public function edit(Monev $monev)
@@ -126,8 +126,7 @@ class MonevController extends Controller
             $request->only(['kode_monev', 'nama_monev', 'periode_id', 'status']),
             ['document_path' => $documentPath]
         ));
-
-        return to_route('monevs.index')->with('success', 'Data Monev berhasil diperbarui.');
+        return to_route($request->status == 'Akademik' ? 'monevs.akademik' : 'monevs.nonakademik')->with('success', 'Data Monev berhasil ditambahkan.');
     }
 
     public function destroy(Monev $monev)

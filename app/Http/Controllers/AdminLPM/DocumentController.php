@@ -27,7 +27,7 @@ class DocumentController extends Controller
 
         return Inertia::render('Documents/Index', [
             'param' => $param,
-            'documents' => $Documents,
+            'documents' =>  DocumentResource::collection($Documents)->resolve(),
             'filters' => $request->only(['search']),
         ]);
     }

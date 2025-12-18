@@ -48,7 +48,7 @@ class InstrumenAkreditasiController extends Controller
 
         $documentPath = null;
         if ($request->hasFile('document')) {
-            $documentPath = $request->file('document')->store('dokumen_mutu', 'public');
+            $documentPath = $request->file('document')->store('instruments', 'public');
         }
 
         InstrumenAkreditasi::create(array_merge(
@@ -56,7 +56,7 @@ class InstrumenAkreditasiController extends Controller
             ['document_path' => $documentPath]
         ));
 
-        return to_route('instrumen-akreditasi.index')->with('success', 'Dokumen Mutu berhasil ditambahkan.');
+        return to_route('instrumen-akreditasis.index')->with('success', 'Dokumen Mutu berhasil ditambahkan.');
     }
 
     public function edit(InstrumenAkreditasi $instrumenAkreditasi)

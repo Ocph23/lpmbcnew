@@ -34,14 +34,14 @@
             </div>
 
 
-            <!-- Akreditasi -->
+            {{-- <!-- Akreditasi -->
             <div class="dropdown">
                 <a href="#">Akreditasi</a>
                 <div class="dropdown-content">
                     <a href="{{ route('akreditasi.institusi') }}">Sertifikat Akreditasi</a>
                     <a href="#">Instrumen Akreditasi</a>
                 </div>
-            </div>
+            </div> --}}
 
             <!-- Mutu -->
             <div class="dropdown">
