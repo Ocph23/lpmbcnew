@@ -2,10 +2,10 @@
     <nav class="header-nav" role="navigation">
         <!-- LOGO & TITLE -->
         <div class="nav-logo">
-            <a href="#">
+            <a href="/">
                 <img src="{{ asset('images/UMPPapua.png') }}" alt="UMPPapua" />
             </a>
-            <a href="#" class="nav-title">LPM UM Papua</a>
+            <a href="/" class="nav-title">LPM UM Papua</a>
         </div>
 
         <!-- MENU TENGAH -->
@@ -19,7 +19,6 @@
                     <a href="{{ route('sejarah') }}">Sejarah</a>
                     <a href="{{ route('visi') }}">Visi & Misi</a>
                     <a href="{{ route('struktur') }}">Struktur Organisasi</a>
-                    <a href="{{ route('renker') }}">Rencana Kerja</a>
                 </div>
             </div>
 
@@ -29,7 +28,6 @@
                 <div class="dropdown-content">
                     <a href="{{ route('spmi') }}">SPMI</a>
                     <a href="{{ route('spme') }}">SPME</a>
-                    <a href="{{ route('pusatdata') }}">Pusat Data</a>
                 </div>
             </div>
 
@@ -61,6 +59,7 @@
 
                 </div>
             </div>
+            <a href="/berita">Berita</a>
             <a href="/layananlpm">Layanan LPM</a>
         </div>
 

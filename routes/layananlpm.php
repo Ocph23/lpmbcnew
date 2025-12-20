@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AdminLPM\AdminNewsController;
 use App\Http\Controllers\AdminLPM\AkreditasiController;
 use App\Http\Controllers\AdminLPM\AuditiController;
 use App\Http\Controllers\AdminLPM\AuditorController;
+use App\Http\Controllers\AdminLPM\CalendarAcademicController;
 use App\Http\Controllers\AdminLPM\DocumentController;
 use App\Http\Controllers\AdminLPM\DokumenAkreditasiController;
 use App\Http\Controllers\AdminLPM\DokumenMutuController;
@@ -34,8 +36,12 @@ Route::get('/layananlpm/dokumen-akreditasi', [DokumenAkreditasiController::class
 Route::get('/layananlpm/instrumen-akreditasis', [InstrumenAkreditasiController::class, 'index'])->name('instrumen-akreditasis.index');
 Route::get('/layananlpm/documents/{param}', [DocumentController::class, 'index'])->name('documents.index');
 Route::get('/layananlpm/documents/create/{param}', [DocumentController::class, 'create'])->name('documents.create');
+Route::get('/layananlpm/calendars', [CalendarAcademicController::class, 'index'])->name('calendars.index');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('/layananlpm/news', AdminNewsController::class)->except(['update']);
+    Route::post('/layananlpm/news/update/{id}', [AdminNewsController::class, 'update'])->name('news.update');
+    Route::resource('/layananlpm/calendars', CalendarAcademicController::class)->except(['show', 'index']);
     Route::resource('/layananlpm/documents', DocumentController::class)->except(['show', 'index', 'create']);
     Route::resource('/layananlpm/instrumen-akreditasis', InstrumenAkreditasiController::class)->except(['index', 'show']);
     Route::post('/layananlpm/instrumen-akreditasis/update/{id}', [InstrumenAkreditasiController::class, 'update'])->name('instrumen-akreditasis.updatepost');

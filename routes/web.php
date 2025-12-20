@@ -18,6 +18,7 @@ use App\Http\Controllers\AuditInstrumentController;
 use App\Http\Controllers\AuditResultController;
 use App\Http\Controllers\IdentitasController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\NewsController;
 
 // Halaman Utama
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -116,8 +117,8 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/agenda/list', [AgendaController::class, 'list'])->name('agenda.list');
 });
 
-// Route::middleware(['auth'])->group(function () {
-//     Route::resource('users',  UserController::class);
-// });
+
+Route::get('/berita', [NewsController::class, 'index'])->name('berita.index');
+Route::get('/berita/{slug}', [NewsController::class, 'show'])->name('berita.show');
 
 include 'layananlpm.php';
