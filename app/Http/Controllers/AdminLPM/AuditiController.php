@@ -33,7 +33,9 @@ class AuditiController extends Controller
 
     public function create()
     {
-        $users = User::all(['id', 'name']);
+        $users = User::whereHas('roles', function ($query) {
+            $query->where('role_name', 'unit_kerja');
+        })->get(['id', 'name']);
         return Inertia::render('Auditis/Create', compact('users'));
     }
 
