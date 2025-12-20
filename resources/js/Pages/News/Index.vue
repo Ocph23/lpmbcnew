@@ -83,7 +83,7 @@ const formatDate = (isoString) => {
             <!-- Header -->
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold">Manajemen Berita</h1>
-                <VTButtonAction :href="route('news.create')" :style="'success'">
+                <VTButtonAction :url="route('news.create')" :style="'success'">
                     <VTIconPlus />
                 </VTButtonAction>
             </div>

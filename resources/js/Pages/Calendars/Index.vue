@@ -3,7 +3,7 @@
 import { computed, ref, watch } from 'vue'
 import { router, usePage } from '@inertiajs/vue3'
 import AdminLayout from '../commponents/layouts/AdminLayout.vue'
-import { VTButtonAction, VTIconPlus } from '@ocph23/vtocph23'
+import { VTButtonAction, VTIconDelete, VTIconPlus } from '@ocph23/vtocph23'
 
 const props = defineProps({
     calendars: Array,
@@ -79,6 +79,13 @@ const formatTime = (isoString) => {
         minute: '2-digit'
     })
 }
+
+
+const destroy = (event) => {
+    if (confirm('Yakin hapus data Acara/Kegiatan ini?')) {
+        router.delete(route('calendars.destroy', event.id))
+    }
+}
 </script>
 
 <template>
@@ -132,23 +139,29 @@ const formatTime = (isoString) => {
             <div class="grid grid-cols-1 lg:grid-cols-3! gap-2">
                 <!-- Daftar Acara -->
                 <div class="lg:col-span-1 bg-white rounded-lg shadow p-4">
-                    <h3 class="text-lg font-medium mb-4">Daftar Acara</h3>
+                    <h3 class="text-lg font-medium mb-4">Daftar Acara/Kegiatan</h3>
                     <div class="space-y-4">
                         <div v-for="event in calendars" :key="event.id"
-                            class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer"
+                            class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 "
                             @click="$router.push(route('calendars.edit', event.id))">
-                            <div class="flex items-start">
-                                <div class="w-3 h-3 rounded-full mt-1" :style="{ backgroundColor: event.color }"></div>
-                                <div class="ml-3">
-                                    <div class="text-sm text-gray-500">
-                                        ({{ formatDate(event.start_time) }} - {{ formatTime(event.start_time) }}) -
-                                        ({{ formatDate(event.end_time) }} {{ formatTime(event.end_time) }})
+                            <div class="flex  justify-between">
+                                <div class="flex items-start">
+                                    <div class="w-3 h-3 rounded-full mt-1" :style="{ backgroundColor: event.color }">
                                     </div>
-                                    <h4 class="font-medium">{{ event.title }}</h4>
-                                    <p v-if="event.description" class="text-sm text-gray-600 mt-1 truncate">
-                                        {{ event.description }}
-                                    </p>
+                                    <div class="ml-3">
+                                        <div class="text-sm text-gray-500">
+                                            ({{ formatDate(event.start_time) }} - {{ formatTime(event.start_time) }}) -
+                                            ({{ formatDate(event.end_time) }} {{ formatTime(event.end_time) }})
+                                        </div>
+                                        <h4 class="font-medium">{{ event.title }}</h4>
+                                        <p v-if="event.description" class="text-sm text-gray-600 mt-1 truncate">
+                                            {{ event.description }}
+                                        </p>
+                                    </div>
+
                                 </div>
+                                <VTIconDelete @click="destroy(event)" class="cursor-pointer fill-red-800">
+                                </VTIconDelete>
                             </div>
                         </div>
                         <div v-if="calendars.length === 0" class="text-center text-gray-500 py-4">
@@ -203,9 +216,7 @@ const formatTime = (isoString) => {
                                                     `bg-${event.color.substring(1)}`
                                                 ]" :style="{ backgroundColor: event.color }">
                                                     {{ event.title }}
-                                                    <br />
-                                                    {{ formatTime(event.start_time) }} - {{ formatTime(event.end_time)
-                                                    }}
+
                                                 </div>
                                                 <div v-if="day.calendars.length > 2" class="text-xs text-gray-500">
                                                     +{{ day.calendars.length - 2 }} lainnya

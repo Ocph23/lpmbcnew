@@ -22,7 +22,7 @@ const submit = () => {
     <AdminLayout>
         <div class="p-6 max-w-2xl mx-auto">
             <div class="flex items-center mb-6">
-                <h1 class="text-2xl font-bold ml-3">Tambah Jadwal Audit</h1>
+                <h1 class="text-2xl font-bold ml-3">Tambah Monev</h1>
             </div>
 
             <form @submit.prevent="submit" class="space-y-6">

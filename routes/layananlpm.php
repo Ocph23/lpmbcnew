@@ -43,6 +43,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/layananlpm/news/update/{id}', [AdminNewsController::class, 'update'])->name('news.update');
     Route::resource('/layananlpm/calendars', CalendarAcademicController::class)->except(['show', 'index']);
     Route::resource('/layananlpm/documents', DocumentController::class)->except(['show', 'index', 'create']);
+    Route::post('/layananlpm/documents/update/{id}', [DocumentController::class, 'update'])->name('documents.updatepost');
     Route::resource('/layananlpm/instrumen-akreditasis', InstrumenAkreditasiController::class)->except(['index', 'show']);
     Route::post('/layananlpm/instrumen-akreditasis/update/{id}', [InstrumenAkreditasiController::class, 'update'])->name('instrumen-akreditasis.updatepost');
     Route::resource('/layananlpm/monevs', MonevController::class)->except(['show', 'index', 'akademik', 'nonakademik']);
