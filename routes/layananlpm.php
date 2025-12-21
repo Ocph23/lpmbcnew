@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminLPM\AdminNewsController;
 use App\Http\Controllers\AdminLPM\AkreditasiController;
+use App\Http\Controllers\AdminLPM\AmilinkController;
 use App\Http\Controllers\AdminLPM\AuditiController;
 use App\Http\Controllers\AdminLPM\AuditorController;
 use App\Http\Controllers\AdminLPM\CalendarAcademicController;
@@ -37,6 +38,8 @@ Route::get('/layananlpm/instrumen-akreditasis', [InstrumenAkreditasiController::
 Route::get('/layananlpm/documents/{param}', [DocumentController::class, 'index'])->name('documents.index');
 Route::get('/layananlpm/documents/create/{param}', [DocumentController::class, 'create'])->name('documents.create');
 Route::get('/layananlpm/calendars', [CalendarAcademicController::class, 'index'])->name('calendars.index');
+Route::get('/layananlpm/amilinks', [AmilinkController::class, 'index'])->name('amilinks.index');
+Route::post('/layananlpm/amilinks', [AmilinkController::class, 'update'])->name('amilinks.update');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('/layananlpm/news', AdminNewsController::class)->except(['update']);

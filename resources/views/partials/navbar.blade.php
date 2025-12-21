@@ -24,10 +24,16 @@
 
             <!-- Bidang -->
             <div class="dropdown">
-                <a href="#">Bidang</a>
+                <a href="#">AMI</a>
                 <div class="dropdown-content">
-                    <a href="{{ route('spmi') }}">SPMI</a>
-                    <a href="{{ route('spme') }}">SPME</a>
+                    <a href="{{ route('jadwal-audits.index') }}">Jadwal Audit</a>
+                    <a href="{{ route('auditors.index') }}">Auditor</a>
+                    <a href="{{ route('auditis.index') }}">Auditi</a>
+                    <a onclick="openUrlInNewTab('/instrumentami')" class="cursor-pointer">Instrument
+                        AMI</a>
+                    <a onclick="openUrlInNewTab('/hasilami')" class="cursor-pointer">Unggah Dokumen Hasil
+                        AMI</a>
+
                 </div>
             </div>
 
@@ -56,13 +62,11 @@
                         <a style="margin-left: 20px"
                             href="/pengolahanmutu/{{ $mutu['kategori'] }}">{{ $mutu['title'] }}</a>
                     @endforeach
-
                 </div>
             </div>
             <a href="/berita">Berita</a>
             <a href="/layananlpm">Layanan LPM</a>
         </div>
-
 
         @auth
             <form method="POST" action="{{ route('logout') }}">
@@ -90,3 +94,15 @@
         <a href="#">Monitoring dan Evaluasi</a>
     </div>
 </header>
+
+
+<script>
+    function openUrlInNewTab(url) {
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                window.open(data.url, '_blank'); // Opens the URL in a new tab
+            });
+
+    }
+</script>
