@@ -27,6 +27,8 @@ Route::get('/downloads', [HomeController::class, 'downloads'])->name('downloads'
 Route::get('/sejarah', [HomeController::class, 'sejarah'])->name('sejarah');
 Route::get('/visi', [HomeController::class, 'visi'])->name('visi');
 Route::get('/struktur', [HomeController::class, 'struktur'])->name('struktur');
+Route::get('/instrumentami', [HomeController::class, 'instrumentami'])->name('instrumentami');
+Route::get('/hasilami', [HomeController::class, 'hasilami'])->name('hasilami');
 Route::view('/renker', 'renker')->name('renker');
 Route::view('/spmi', 'spmi')->name('spmi');
 Route::view('/spme', 'spme')->name('spme');

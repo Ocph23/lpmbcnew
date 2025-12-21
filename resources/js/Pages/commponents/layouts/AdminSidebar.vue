@@ -191,6 +191,11 @@
                             <ItemIcon />
                         </template>
                     </LinkItem>
+                    <LinkItem v-if="isAdmin" url="amilinks.index" title="Audit Link Document" parent="audit">
+                        <template #icon>
+                            <ItemIcon />
+                        </template>
+                    </LinkItem>
                 </div>
             </template>
         </LinkItem>

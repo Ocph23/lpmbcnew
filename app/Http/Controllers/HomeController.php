@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Akreditasi;
 use App\Models\Agenda;   // <-- tambahkan ini
+use App\Models\Amilink;
 use App\Models\Document;
 use App\Models\DokumenMutu;
 use App\Models\Identitas;
@@ -123,5 +124,17 @@ class HomeController extends Controller
         $laporans = DokumenMutu::where('kategori', $param)
             ->get();
         return view('pengolahanmutu', compact('laporans', 'title'));
+    }
+
+
+    public function instrumentami()
+    {
+        $amilink = Amilink::first();
+        return response()->json(['url' => $amilink->instrumenami]);
+    }
+    public function hasilami()
+    {
+        $amilink = Amilink::first();
+        return response()->json(['url' => $amilink->dokumenhasilami]);
     }
 }
