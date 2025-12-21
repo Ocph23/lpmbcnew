@@ -240,6 +240,7 @@
         margin-bottom: 1.5rem;
         padding: 0.438em 1.875rem;
         font-size: 0.9rem;
+        z-index: 1000;
     }
 
     .swiper-slide a:hover {
