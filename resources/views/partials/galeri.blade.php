@@ -25,6 +25,12 @@
                     Rapat Persiapan Pendampingan Mutu
                 </div>
             </div>
+            <div class="gallery-card">
+                <img src="images/Pelepasan Mahasiswa KKN TEMATIK oleh Rektor UM Papua.jpg" alt="">
+                <div class="gallery-text">
+                    Penandatangan MOU UM Papua
+                </div>
+            </div>
         </div>
 
         <div class="view-all">

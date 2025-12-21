@@ -12,8 +12,12 @@
   </div>
 
   <div class="mySlides fade">
-    <img src="{{ asset('images/UMP 3.png') }}" style="width:100%">
+    <img src="{{ asset('images/Wisuda 2024.jpg') }}" style="width:100%">
     <div class="text">Rapat Senat Terbuka Universitas Muhammaidyah Papua</div>
+  </div>
+  <div class="mySlides fade">
+    <img src="{{ asset('images/PKKMB UM Papua.jpg') }}" style="width:100%">
+    <div class="text">PKKMB UM Papua</div>
   </div>
 
   <!-- Next and previous buttons -->
