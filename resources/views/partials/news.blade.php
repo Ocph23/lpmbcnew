@@ -9,7 +9,7 @@
                 <div class="swiper-slide itemslide" style="background-image: url('/storage/{{ $item->thumbnail_path }}')">
                     <div class="itembg">
                         <h5 class="itemtitle">{{ $item->title }}</h5>
-                        <a href="https://en.wikipedia.org/wiki/Jellyfish" target="_blank">explore</a>
+                        <a href="/berita/{{ $item->slug }}">explore</a>
                     </div>
                 </div>
             @endforeach
