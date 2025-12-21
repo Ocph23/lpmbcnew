@@ -5,3 +5,4 @@ import './slider.js'; // script JS untuk slider
 import './akreditasi.js'; // script JS untuk akreditasi
 import './pusatdata.js';
 import './galeri.js';
+

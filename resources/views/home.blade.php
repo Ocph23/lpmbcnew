@@ -14,4 +14,5 @@
     {{-- Sambutan --}}
     <section class="hero p-20 bg-red-700 text-center text-amber-600">
     </section>
+    @include('partials.news', ['news' => $news])
 @endsection

@@ -10,6 +10,7 @@ use App\Models\Document;
 use App\Models\DokumenMutu;
 use App\Models\Identitas;
 use App\Models\Laporan;
+use App\Models\News;
 use App\Models\Standar;
 use App\Models\Unit;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,13 @@ class HomeController extends Controller
         // Ambil hanya 3 agenda terbaru
         $agendas = Agenda::orderBy('start_date', 'asc')->limit(3)->get();
 
-        return view('home', compact('data', 'agendas'));
+        $news = News::published()
+            ->latest()
+            ->take(7)
+            ->get();
+
+
+        return view('home', compact('data', 'agendas', 'news'));
     }
 
 
