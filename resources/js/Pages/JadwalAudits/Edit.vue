@@ -49,8 +49,6 @@ const hasExistingDocument = props.jadwalAudit.document_path
 
 <template>
     <AdminLayout>
-
-        {{ form }}
         <div class="p-6 ">
             <div class="flex items-center mb-6">
                 <h1 class="text-2xl font-bold ml-3">Edit Jadwal Audit</h1>
