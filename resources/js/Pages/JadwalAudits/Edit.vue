@@ -12,6 +12,7 @@ const props = defineProps({
 })
 
 const form = useForm({
+    id: props.jadwalAudit.id,
     auditi_id: props.jadwalAudit.auditi_id,
     periode_id: props.jadwalAudit.periode_id,
     auditor_id: props.jadwalAudit.auditor_id,
@@ -27,15 +28,15 @@ const submit = () => {
         return
     }
 
-    const formData= {
-    auditi_id: form.auditi_id,
-    periode_id: form.periode_id,
-    auditor_id: form.auditor_id,
-    auditor2_id: form.auditor2_id,
-    start_date: form.start_date,
-    status: form.status,
-    document: form.document
-}
+    const formData = {
+        auditi_id: form.auditi_id,
+        periode_id: form.periode_id,
+        auditor_id: form.auditor_id,
+        auditor2_id: form.auditor2_id,
+        start_date: form.start_date,
+        status: form.status,
+        document: form.document
+    }
 
     form.post(route('jadwal-audits.update', form.data), {
         forceFormData: true, // 🔑 KUNCI UTAMA
@@ -49,7 +50,7 @@ const hasExistingDocument = props.jadwalAudit.document_path
 <template>
     <AdminLayout>
 
-    {{form}}
+        {{ form }}
         <div class="p-6 ">
             <div class="flex items-center mb-6">
                 <h1 class="text-2xl font-bold ml-3">Edit Jadwal Audit</h1>
@@ -90,7 +91,7 @@ const hasExistingDocument = props.jadwalAudit.document_path
                     <select v-model="form.auditor_id"
                         class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
                         <option :value="null">– Tidak ada –</option>
-                        <option v-for="u in auditors.filter(x=>x.kategori==1)" :key="u.id" :value="u.id">
+                        <option v-for="u in auditors.filter(x => x.kategori == 1)" :key="u.id" :value="u.id">
                             {{ u.name }}
                         </option>
                     </select>
@@ -102,7 +103,7 @@ const hasExistingDocument = props.jadwalAudit.document_path
                     <select v-model="form.auditor2_id"
                         class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
                         <option :value="null">– Tidak ada –</option>
-                        <option v-for="u in auditors.filter(x=>x.kategori==2)" :key="u.id" :value="u.id">
+                        <option v-for="u in auditors.filter(x => x.kategori == 2)" :key="u.id" :value="u.id">
                             {{ u.name }}
                         </option>
                     </select>
