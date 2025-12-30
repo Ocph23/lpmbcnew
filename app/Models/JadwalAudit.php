@@ -45,11 +45,11 @@ class JadwalAudit extends Model
 
     public function auditor()
     {
-        return $this->belongsTo(\App\Models\User::class, 'auditor_id');
+        return $this->belongsTo(\App\Models\Auditor::class, 'auditor_id');
     }
 
     public function auditor2()
     {
-        return $this->belongsTo(\App\Models\User::class, 'auditor2_id');
+        return $this->belongsTo(\App\Models\Auditor::class, 'auditor2_id');
     }
 }
