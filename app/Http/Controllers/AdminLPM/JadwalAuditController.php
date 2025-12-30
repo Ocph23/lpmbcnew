@@ -75,10 +75,10 @@ class JadwalAuditController extends Controller
         $request->validate([
             'auditi_id' => 'required|exists:auditis,id',
             'periode_id' => 'required|exists:periodes,id',
-            'auditor_id' => 'nullable|exists:users,id',
+            'auditor_id' => 'nullable|exists:auditors,id',
             'start_date' => 'required|date',
             'status' => 'required|in:terjadwal,terlaksana',
-            'auditor2_id' => 'nullable|exists:users,id',
+            'auditor2_id' => 'nullable|exists:auditors,id',
         ]);
 
         JadwalAudit::create($request->only([
@@ -97,7 +97,7 @@ class JadwalAuditController extends Controller
     {
         $auditis = Auditi::all(['id', 'name']);
         $periodes = Periode::all(['id', 'year', 'semester']);
-        $auditors = User::all(['id', 'name']); // sesuaikan dengan kebutuhan
+         $auditors = Auditor::all(['id', 'name', 'kategori']);
 
         return Inertia::render('JadwalAudits/Edit', compact('jadwalAudit', 'auditis', 'periodes', 'auditors'));
     }
@@ -108,8 +108,8 @@ class JadwalAuditController extends Controller
         $rules = [
             'auditi_id' => 'required|exists:auditis,id',
             'periode_id' => 'required|exists:periodes,id',
-            'auditor_id' => 'nullable|exists:users,id',
-            'auditor2_id' => 'nullable|exists:users,id',
+            'auditor_id' => 'nullable|exists:auditors,id',
+            'auditor2_id' => 'nullable|exists:auditors,id',
             'start_date' => 'required|date',
             'status' => 'required|in:terjadwal,terlaksana',
         ];

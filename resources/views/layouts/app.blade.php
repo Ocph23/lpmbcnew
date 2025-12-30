@@ -29,8 +29,7 @@
     <main class="flex-grow">
         @yield('content')
     </main>
-
-
+    
     @include('partials.footer')
     {{-- JS tambahan manual --}}
 

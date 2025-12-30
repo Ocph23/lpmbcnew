@@ -5,7 +5,7 @@
             <a href="/">
                 <img src="{{ asset('images/UMPPapua.png') }}" alt="UMPPapua" />
             </a>
-            <a href="/" class="nav-title">LPM UM Papua</a>
+            <a href="/" class="nav-title">LPM Universitas Muhammadiyah Papua</a>
         </div>
 
         <!-- MENU TENGAH -->

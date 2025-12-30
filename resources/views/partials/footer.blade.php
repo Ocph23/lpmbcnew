@@ -16,16 +16,44 @@
         </div>
 
         <!-- kanan: sosial + copyright -->
-        <div class="footer-right">
-            <span class="copyright">© LPM UM Papua 2025</span>
-            <div class="social-icons">
-                <a href="#" class="social-icon facebook" title="Facebook"><i class="fab fa-facebook"></i></a>
-                <a href="#" class="social-icon instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="social-icon youtube" title="YouTube"><i class="fab fa-youtube"></i></a>
-                <a href="#" class="social-icon twitter" title="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="social-icon whatsapp" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                <a href="#" class="social-icon email" title="Email"><i class="fas fa-envelope"></i></a>
-            </div>
+<div class="footer-right">
+    <span class="copyright">© LPM UM Papua 2025</span>
+    <div class="social-icons">
+
+        <a href="https://www.facebook.com/UniversitasMuhammadiyahPapua" 
+           target="_blank" rel="noopener" 
+           class="social-icon facebook" title="Facebook">
+            <i class="fab fa-facebook"></i>
+        </a>
+
+        <a href="https://www.instagram.com/universitas_muhammadiyah_papua/" 
+           target="_blank" rel="noopener" 
+           class="social-icon instagram" title="Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+
+        <a href="https://www.youtube.com/@umpapuachannel" 
+           target="_blank" rel="noopener" 
+           class="social-icon youtube" title="YouTube">
+            <i class="fab fa-youtube"></i>
+        </a>
+
+        <a href="https://x.com/UM_Papua1?s=20" 
+           target="_blank" rel="noopener" 
+           class="social-icon twitter" title="Twitter / X">
+            <i class="fab fa-twitter"></i>
+        </a>
+
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=mail@umpapua.ac.id"
+            target="_blank"
+            rel="noopener"
+            class="social-icon email"
+            title="Email">
+            <i class="fas fa-envelope"></i>
+        </a>
+
         </div>
+
     </div>
+    
 </footer>

@@ -1,6 +1,6 @@
 <div class="mainx">
     <div>
-        <h1>Berita Terkini</h1>
+        <h1>Berita Terbaru</h1>
         <hr>
     </div>
     <div class="swiper">
