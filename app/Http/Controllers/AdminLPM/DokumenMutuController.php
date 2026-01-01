@@ -164,6 +164,6 @@ class DokumenMutuController extends Controller
             Storage::delete($dokumenMutu->document_path);
         }
         $dokumenMutu->delete();
-        return to_route('dokumen-mutus.index')->with('success', 'Dokumen Mutu berhasil dihapus.');
+        return to_route('dokumen-mutus.filter', $dokumenMutu->kategori)->with('success', 'Dokumen Mutu berhasil dihapus.');
     }
 }
