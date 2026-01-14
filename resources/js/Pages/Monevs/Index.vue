@@ -18,6 +18,13 @@ const isAdmin = computed(() => {
     if (!props.auth || !props.auth.user) return false;
     return props.auth.user.roles.includes('admin');
 });
+
+
+const isLogin = computed(() => {
+    if (props.auth && props.auth.user) return true;
+    return false;
+});
+
 const search = ref(usePage().props.filters?.search || '')
 const periodeFilter = ref(usePage().props.filters?.periode_id || '')
 
@@ -121,7 +128,7 @@ const destroy = (id) => {
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ monev.status }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <ActionComponent :is-authenticated="isAdmin">
+                                <ActionComponent :is-authenticated="isLogin">
 
                                     <a v-if="monev.document_path" :href="'/storage/' + monev.document_path"
                                         target="_blank" class="text-blue-600 hover:underline">
