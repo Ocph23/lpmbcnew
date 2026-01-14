@@ -129,7 +129,6 @@ const destroy = (id) => {
                             <td class="px-6 py-4 whitespace-nowrap">{{ monev.status }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <ActionComponent :is-authenticated="isLogin">
-
                                     <a v-if="monev.document_path" :href="'/storage/' + monev.document_path"
                                         target="_blank" class="text-blue-600 hover:underline">
                                         📄
