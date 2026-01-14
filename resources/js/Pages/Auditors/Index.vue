@@ -17,7 +17,7 @@ const search = ref(usePage().props.filters?.search || '')
 
 const isAdmin = computed(() => {
     if (!props.auth || !props.auth.user) return false;
-    return props.auth.user.roles.includes('admin');
+    return props.auth.user.roles.includes('admin') || props.auth.user.roles.includes('pimpinan');
 });
 
 let searchTimeout

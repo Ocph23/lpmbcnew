@@ -20,7 +20,7 @@ const option = helper.kategoriOptions.find(x => x.kategori == props.parameter)
 
 const isAdmin = computed(() => {
     if (!props.auth || !props.auth.user) return false;
-    return props.auth.user.roles.includes('admin');
+    return props.auth.user.roles.includes('admin') || props.auth.user.roles.includes('pimpinan');
 });
 const search = ref(usePage().props.filters?.search || '')
 

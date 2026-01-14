@@ -316,7 +316,7 @@ const isPimpinan = computed(() => {
 
 const isAdmin = computed(() => {
     if (!auth || !auth.user) return false;
-    return auth.user.roles.includes('admin');
+    return props.auth.user.roles.includes('admin') || props.auth.user.roles.includes('pimpinan');
 });
 
 onMounted(() => {
