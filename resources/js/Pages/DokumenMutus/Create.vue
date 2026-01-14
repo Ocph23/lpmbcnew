@@ -128,7 +128,7 @@ const jenisDocumentOptions = ['Upload', 'Link Eksternal']
                         class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Masukkan Link External" />
                     <div v-if="form.errors.document_path" class="text-red-500 text-sm mt-1">{{ form.errors.document_path
-                    }}</div>
+                        }}</div>
                 </div>
 
                 <!-- Aksi -->

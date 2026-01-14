@@ -1,6 +1,6 @@
 <!-- resources/js/Pages/Monevs/Create.vue -->
 <script setup>
-import { useForm } from '@inertiajs/vue3'
+import { Link, useForm } from '@inertiajs/vue3'
 import AdminLayout from '../commponents/layouts/AdminLayout.vue'
 import FlashMessage from '../commponents/FlashMessage.vue'
 // ... komponen lain
@@ -110,9 +110,10 @@ const submit = () => {
                         :disabled="form.processing">
                         Simpan
                     </button>
-                    <VTButtonAction :url="route('monevs.akademik')" :style="'secondary'">
+                    <Link :href="route('monevs.akademik')"
+                        class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         Batal
-                    </VTButtonAction>
+                    </Link>
                 </div>
             </form>
         </div>
