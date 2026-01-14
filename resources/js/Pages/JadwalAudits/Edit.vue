@@ -1,6 +1,6 @@
 <!-- resources/js/Pages/JadwalAudits/Edit.vue -->
 <script setup>
-import { useForm } from '@inertiajs/vue3'
+import { Link, useForm } from '@inertiajs/vue3'
 import AdminLayout from '../commponents/layouts/AdminLayout.vue'
 
 const route = window.route
@@ -169,9 +169,10 @@ const hasExistingDocument = props.jadwalAudit.document_path
                         :disabled="form.processing">
                         Perbarui
                     </button>
-                    <VTButtonAction :url="route('jadwal-audits.index')" :style="'secondary'">
+                    <Link :href="route('jadwal-audits.index')"
+                        class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         Batal
-                    </VTButtonAction>
+                    </Link>
                 </div>
             </form>
 

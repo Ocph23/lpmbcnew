@@ -5,6 +5,7 @@ import { router, usePage } from '@inertiajs/vue3'
 import AdminLayout from '../commponents/layouts/AdminLayout.vue'
 import { VTButtonAction, VTIconPlus } from '@ocph23/vtocph23'
 import FlashMessage from '../commponents/FlashMessage.vue'
+import ActionComponent from '../commponents/ActionComponent.vue'
 
 
 const props = defineProps({
@@ -120,16 +121,22 @@ const destroy = (id) => {
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ monev.status }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <a v-if="monev.document_path" :href="'/storage/' + monev.document_path" target="_blank"
-                                    class="text-blue-600 hover:underline">
-                                    📄
-                                </a>
-                                <span v-else>–</span>
+                                <ActionComponent :is-authenticated="isAdmin">
+
+                                    <a v-if="monev.document_path" :href="'/storage/' + monev.document_path"
+                                        target="_blank" class="text-blue-600 hover:underline">
+                                        📄
+                                    </a>
+                                    <span v-else>–</span>
+                                </ActionComponent>
                             </td>
                             <td
                                 class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end gap-2">
-                                <VTButtonAction :url="route('monevs.edit', monev.id)" type="edit" :style="'warning'" />
-                                <VTButtonAction @click="destroy(monev.id)" type="delete" :style="'danger'" />
+                                <ActionComponent :is-authenticated="isAdmin">
+                                    <VTButtonAction :url="route('monevs.edit', monev.id)" type="edit"
+                                        :style="'warning'" />
+                                    <VTButtonAction @click="destroy(monev.id)" type="delete" :style="'danger'" />
+                                </ActionComponent>
                             </td>
                         </tr>
                         <tr v-if="monevs.length === 0">
