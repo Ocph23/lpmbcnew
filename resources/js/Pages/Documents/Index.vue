@@ -97,7 +97,7 @@ const destroy = (id) => {
                             </td>
                             <td
                                 class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end gap-2">
-                                <ActionComponent :is-authenticated="isAdmin">
+                                <ActionComponent v-if="isAdmin" :is-authenticated="isAdmin">
                                     <VTButtonAction :url="route('documents.edit', doc.id)" :type="'edit'"
                                         :style="'warning'" />
                                     <VTButtonAction @click="destroy(doc.id)" type="delete" :style="'danger'" />
