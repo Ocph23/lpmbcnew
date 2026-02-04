@@ -132,12 +132,13 @@ const destroy = (id) => {
                                 }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex  gap-1">
+                                <div class="flex  gap-1" v-if="isAdmin">
                                     <DownloadComponent v-if="doc.link_sk" :link="doc.link_sk" :title="'SK'" />
                                     <DownloadComponent v-if="doc.link_sertifikat" :link="doc.link_sertifikat"
                                         :title="'Sertifikat'" />
 
                                 </div>
+                                <div class="flex  gap-1" v-else></div>
                             </td>
                             <td
                                 class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end gap-2">
