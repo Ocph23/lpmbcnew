@@ -76,7 +76,8 @@ const destroy = (id) => {
                                 Sasaran</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Akses</th>
-                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th v-if="isAdmin"
+                                class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Aksi</th>
                         </tr>
                     </thead>
@@ -95,7 +96,7 @@ const destroy = (id) => {
                                 </a>
                                 <VTIconEyeSlash class="text-gray-400" v-else :size="'lg'" />
                             </td>
-                            <td
+                            <td v-if="isAdmin"
                                 class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end gap-2">
                                 <ActionComponent v-if="isAdmin" :is-authenticated="isAdmin">
                                     <VTButtonAction :url="route('documents.edit', doc.id)" :type="'edit'"
