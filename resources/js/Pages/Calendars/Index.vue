@@ -154,7 +154,8 @@ const destroy = (event) => {
                                             ({{ formatDate(event.end_time) }} {{ formatTime(event.end_time) }})
                                         </div>
                                         <h4 class="font-medium">{{ event.title }}</h4>
-                                        <p v-if="event.description" class="text-sm text-gray-600 mt-1 truncate">
+                                        <p v-if="event.description"
+                                            class="text-sm text-wrap text-gray-600 mt-1 truncate">
                                             {{ event.description }}
                                         </p>
                                     </div>
