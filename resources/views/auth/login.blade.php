@@ -61,7 +61,6 @@
                     <input type="checkbox" name="remember" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
                     <span class="text-gray-600">Ingat saya</span>
                 </label>
-                <a href="{{ route('password.request') }}" class="text-blue-600 hover:underline">Lupa Password?</a>
             </div>
 
             <!-- Tombol Masuk -->
