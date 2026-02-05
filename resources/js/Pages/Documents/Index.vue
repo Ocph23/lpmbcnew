@@ -17,6 +17,10 @@ const isAdmin = computed(() => {
     if (!props.auth || !props.auth.user) return false;
     return props.auth.user.roles.includes('admin') || props.auth.user.roles.includes('pimpinan');
 });
+
+
+
+
 const search = ref(usePage().props.filters?.search || '')
 
 let searchTimeout
@@ -76,7 +80,7 @@ const destroy = (id) => {
                                 Sasaran</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Akses</th>
-                            <th v-if="isAdmin"
+                            <th v-if="auth.isAuthenticated"
                                 class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Aksi</th>
                         </tr>
@@ -96,7 +100,7 @@ const destroy = (id) => {
                                 </a>
                                 <VTIconEyeSlash class="text-gray-400" v-else :size="'lg'" />
                             </td>
-                            <td v-if="isAdmin"
+                            <td v-if="auth.isAuthenticated"
                                 class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end gap-2">
                                 <ActionComponent v-if="isAdmin" :is-authenticated="isAdmin">
                                     <VTButtonAction :url="route('documents.edit', doc.id)" :type="'edit'"
